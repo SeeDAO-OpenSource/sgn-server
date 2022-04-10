@@ -2,6 +2,7 @@ package app
 
 type AppContext struct {
 	CmdBuilder *CommandBuilder
+	Services   map[string]*interface{}
 }
 
 func (ac *AppContext) Build() App {
@@ -9,7 +10,7 @@ func (ac *AppContext) Build() App {
 	return newApp(rootCmd)
 }
 
-func (ac *AppContext) AppInfo(name string, description string) {
-	ac.CmdBuilder.RootCmd.Use = name
+func (ac *AppContext) RootCmd(use string, description string) {
+	ac.CmdBuilder.RootCmd.Use = use
 	ac.CmdBuilder.RootCmd.Short = description
 }

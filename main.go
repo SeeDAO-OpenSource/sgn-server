@@ -4,15 +4,21 @@ import (
 	"log"
 
 	"github.com/waite-lee/nftserver/internal/cmd"
+	"github.com/waite-lee/nftserver/pkg/app"
 )
 
 func main() {
-	appContext, err := BuildAppContext()
-	cmd.InstallCommands(appContext)
-	appContext.AppInfo("NFT服务", "提供NFT相关基础服务")
-	app := appContext.Build()
+	app, err := buildApp()
 	if err != nil {
 		log.Fatal("初始化失败:" + err.Error())
 	}
 	app.Run()
+}
+
+func buildApp() (app.App, error) {
+	appContext, err := BuildAppContext()
+	cmd.InstallCommands(appContext)
+	appContext.RootCmd("nftserver", "提供NFT相关基础服务")
+	app := appContext.Build()
+	return app, err
 }

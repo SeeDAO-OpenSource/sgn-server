@@ -2,7 +2,7 @@ package nftv1
 
 import (
 	"github.com/gin-gonic/gin"
-	nnet "github.com/waite-lee/nftserver/pkg/net"
+	"github.com/waite-lee/nftserver/pkg/mvc"
 )
 
 type NftController struct {
@@ -12,6 +12,6 @@ func newNtfController() NftController {
 	return NftController{}
 }
 
-func (c *NftController) Get(ctx *gin.Context) {
-	nnet.Ok(ctx, "hello NFT")
+func (c *NftController) GetList(ctx *gin.Context) {
+	mvc.Ok(ctx, "hello NFT")
 }

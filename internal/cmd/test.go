@@ -20,5 +20,6 @@ func NewTestCmd() *TestCmd {
 
 func excute() error {
 	log.Println("测试")
+	//client, err := ethclient.Dial("https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161")
 	return nil
 }

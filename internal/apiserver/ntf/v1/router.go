@@ -9,7 +9,7 @@ func route(ntfctl *NftController, g *gin.Engine) {
 	{
 		v1 := ntfGroup.Group("nft")
 		{
-			v1.GET("", ntfctl.Get)
+			v1.GET("", ntfctl.GetList)
 		}
 	}
 }

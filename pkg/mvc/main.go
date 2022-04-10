@@ -1,4 +1,4 @@
-package nnet
+package mvc
 
 import (
 	"net/http"

@@ -11,6 +11,6 @@ func InstallNftV1(ac *app.AppContext, server *server.ServerContext) {
 }
 
 func initRoute(g *gin.Engine) {
-	ctll := newNtfController()
-	route(&ctll, g)
+	ntfCtl := newNtfController()
+	route(&ntfCtl, g)
 }
