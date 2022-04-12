@@ -16,13 +16,15 @@ import (
 
 func BuildCommands(ac *app.AppContext) AppCommands {
 	testCmd := NewTestCmd()
-	serverBuilder := server.NewServerContext()
-	apiServer := apiserver.NewApiServer(serverBuilder, ac)
+	serverContext := server.NewServerContext()
+	apiServer := apiserver.NewApiServer(serverContext, ac)
 	apiServerOptions := _wireApiServerOptionsValue
 	apiServerCmd := NewApiServerCmd(apiServer, apiServerOptions)
+	nftPullCmd := NewNftPullCmd()
 	appCommands := AppCommands{
 		Test:      testCmd,
 		ApiServer: apiServerCmd,
+		NtfPull:   nftPullCmd,
 	}
 	return appCommands
 }

@@ -1,6 +1,8 @@
 package nftv1
 
 import (
+	"errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/waite-lee/nftserver/pkg/mvc"
 )
@@ -12,6 +14,21 @@ func newNtfController() NftController {
 	return NftController{}
 }
 
-func (c *NftController) GetList(ctx *gin.Context) {
-	mvc.Ok(ctx, "hello NFT")
+func (c *NftController) GetOwners(ctx *gin.Context) {
+	addr := ctx.Param("ntfaddr")
+	if addr == "" {
+		mvc.Error(ctx, errors.New("ntfaddr is required"))
+		return
+	}
+	srv, err := BuildNtfServiceV1()
+	if err != nil {
+		mvc.Error(ctx, err)
+		return
+	}
+	data, err := srv.GetOwners(&addr, false)
+	if err != nil {
+		mvc.Error(ctx, err)
+		return
+	}
+	mvc.Ok(ctx, data)
 }

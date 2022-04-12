@@ -6,7 +6,7 @@ import (
 	"gorm.io/datatypes"
 )
 
-type metadata struct {
+type Metadata struct {
 	ID        int64  `gorm:"primarykey"`
 	Uri       string `gorm:"size,512"`
 	content   datatypes.JSON

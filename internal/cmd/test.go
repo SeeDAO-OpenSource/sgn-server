@@ -4,14 +4,20 @@ import (
 	"context"
 	"log"
 	"math/big"
+	"net"
+	"net/http"
+	"net/url"
 	"strings"
+	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/go-resty/resty/v2"
 	"github.com/metachris/eth-go-bindings/erc721"
+	"github.com/nanmu42/etherscan-api"
 	"github.com/spf13/cobra"
+	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/ntf/v1"
 )
 
 type TestCmd cobra.Command
@@ -28,15 +34,56 @@ func NewTestCmd() *TestCmd {
 
 func excute() error {
 	log.Println("测试")
-	client, err := ethclient.Dial("https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161")
+	// client, err := ethclient.Dial("https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161")
+	// if err != nil {
+	// 	return err
+	// }
+	// return GetErc721TranferLogs(client)
+	srv, err := nftv1.BuildNtfServiceV1()
 	if err != nil {
 		return err
 	}
-	return GetMetaInfo(client)
+	addr := "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1"
+	data, err := srv.GetOwners(&addr, true)
+	if err != nil {
+		return err
+	}
+	for _, v := range data {
+		log.Println(v.Name + "," + v.TokenURI)
+	}
+	return nil
+}
+
+func GetErc721TranferLogs() error {
+	client := http.Client{}
+	proxyUrl, err := url.Parse("http://localhost:4780")
+	client.Transport = &http.Transport{
+		Proxy: http.ProxyURL(proxyUrl),
+		DialContext: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+	}
+	esClient := etherscan.NewCustomized(etherscan.Customization{
+		Key:     "ZZKAMSFGQ6KEFD6ZWM3PSI5UAQ724KSY75",
+		BaseURL: "https://api.etherscan.io/api?",
+		Client:  &client,
+	})
+	addr := "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1"
+	data, err := esClient.ERC721Transfers(&addr, nil, nil, nil, 1, 1000, true)
+	if err != nil {
+		return err
+	}
+	log.Println(len(data))
+	return nil
 }
 
 func GetMetaInfo(ethClient *ethclient.Client) error {
-
 	contrctAddr := common.HexToAddress("0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1")
 	token, err := erc721.NewErc721(contrctAddr, ethClient)
 	if err != nil {
