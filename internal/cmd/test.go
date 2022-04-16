@@ -17,7 +17,7 @@ import (
 	"github.com/metachris/eth-go-bindings/erc721"
 	"github.com/nanmu42/etherscan-api"
 	"github.com/spf13/cobra"
-	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/ntf/v1"
+	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/nft/v1"
 )
 
 type TestCmd cobra.Command
@@ -44,13 +44,11 @@ func excute() error {
 		return err
 	}
 	addr := "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1"
-	data, err := srv.GetOwners(&addr, true)
+	data, err := srv.GetOwners(addr, 1, 10)
 	if err != nil {
 		return err
 	}
-	for _, v := range data {
-		log.Println(v.Name + "," + v.TokenURI)
-	}
+	log.Println(data)
 	return nil
 }
 
@@ -91,7 +89,6 @@ func GetMetaInfo(ethClient *ethclient.Client) error {
 	}
 	log.Println(token.Name(nil))
 	tokenUri, err := token.TokenURI(nil, big.NewInt(405))
-	tokenUri = strings.ReplaceAll(tokenUri, "", "")
 	tokenUri = strings.TrimLeft(tokenUri, "ipfs://")
 	tokenUri = strings.TrimLeft(tokenUri, "ipfs/")
 	httpClient := resty.New()

@@ -2,6 +2,7 @@ package erc721
 
 import (
 	"math/big"
+	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -12,12 +13,6 @@ import (
 type Erc721Service struct {
 	options *EtherScanOptions
 	client  *etherscan.Client
-}
-
-type TokenInfo struct {
-	Name     string
-	TokenId  *big.Int
-	TokenURI string
 }
 
 func NewErc721Service(client *etherscan.Client, options *EtherScanOptions) *Erc721Service {
@@ -39,11 +34,13 @@ func (srv *Erc721Service) GetToken(ethClient *ethclient.Client, address *string,
 		return nil, err
 	}
 	info := TokenInfo{
-		TokenId: tokenId,
+		TokenId: tokenId.Int64(),
 	}
 	name, err := token.Name(nil)
 	info.Name = name
 	tokenURI, err := token.TokenURI(nil, tokenId)
 	info.TokenURI = tokenURI
+	info.Contract = *address
+	info.ID = info.Contract + strconv.FormatInt(info.TokenId, 10)
 	return &info, nil
 }

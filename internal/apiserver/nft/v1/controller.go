@@ -25,10 +25,10 @@ func (c *NftController) GetOwners(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	data, err := srv.GetOwners(&addr, false)
+	err = srv.PullData(&addr, false)
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	mvc.Ok(ctx, data)
+	mvc.Ok(ctx, "")
 }

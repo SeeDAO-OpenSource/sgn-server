@@ -14,6 +14,7 @@ type Metadata struct {
 }
 
 type ERC721Transfer struct {
+	ID                string `json:"id" bson:"_id"`
 	BlockNumber       int
 	TimeStamp         time.Time
 	Hash              string `gorm:"szie,80"`

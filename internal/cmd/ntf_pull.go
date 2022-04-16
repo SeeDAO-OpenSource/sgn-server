@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/ntf/v1"
+	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/nft/v1"
 )
 
 type NftPullCmd cobra.Command
@@ -33,6 +33,5 @@ func runPull() error {
 	if err != nil {
 		return err
 	}
-	srv.GetOwners(&address, true)
-	return nil
+	return srv.PullData(&address, true)
 }

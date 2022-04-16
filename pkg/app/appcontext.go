@@ -2,7 +2,6 @@ package app
 
 type AppContext struct {
 	CmdBuilder *CommandBuilder
-	Services   map[string]*interface{}
 }
 
 func (ac *AppContext) Build() App {

@@ -2,7 +2,7 @@ package apiserver
 
 import (
 	"github.com/google/wire"
-	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/ntf/v1"
+	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/nft/v1"
 	"github.com/waite-lee/nftserver/pkg/app"
 	"github.com/waite-lee/nftserver/pkg/server"
 )
