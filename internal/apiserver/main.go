@@ -2,6 +2,7 @@ package apiserver
 
 import (
 	"github.com/google/wire"
+	blobv1 "github.com/waite-lee/nftserver/internal/apiserver/blob/v1"
 	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/nft/v1"
 	"github.com/waite-lee/nftserver/pkg/app"
 	"github.com/waite-lee/nftserver/pkg/server"
@@ -27,6 +28,7 @@ func NewApiServer(server *server.ServerContext, context *app.AppContext) ApiServ
 
 func (as *ApiServer) Run() error {
 	nftv1.InstallNftV1(as.appContext, as.server)
+	blobv1.InstallBlobV1(as.appContext, as.server)
 	as.server.Init()
 	return as.server.GEngine.Run(":5000")
 }

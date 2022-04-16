@@ -39,16 +39,22 @@ func excute() error {
 	// 	return err
 	// }
 	// return GetErc721TranferLogs(client)
+	var url = url.QueryEscape("ipfs://ipfs/QmPC5snE5sgrfEEirrehxtS8KT7GxjAWzbSUdXGYgQMV4S")
+	log.Println(url)
+	return nil
+}
+
+func pullData() error {
 	srv, err := nftv1.BuildNtfServiceV1()
 	if err != nil {
 		return err
 	}
 	addr := "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1"
-	data, err := srv.GetOwners(addr, 1, 10)
+	err = srv.PullData(&addr, 0, true)
 	if err != nil {
 		return err
 	}
-	log.Println(data)
+	// log.Println(data)
 	return nil
 }
 

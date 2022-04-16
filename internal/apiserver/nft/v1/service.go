@@ -34,7 +34,7 @@ func (srv *NftService) GetOwners(address string, page int, pageSize int) ([]erc7
 }
 
 func (srv *NftService) PullData(contract *string, skip int64, logging bool) error {
-	data, err := srv.Erc.GetTransferLogs(contract, 0, 10)
+	data, err := srv.Erc.GetTransferLogs(contract, 1, 30)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,6 @@ func (srv *NftService) PullData(contract *string, skip int64, logging bool) erro
 			}
 			tokenInfo.Metadata = erc721.ParseMetadata(content)
 			imageUri := tokenInfo.Metadata.Image
-			imageUri = srv.IpfsClient.TrimKey(imageUri)
 			if !srv.Blobstore.Exists(&imageUri) {
 				logPrintf(logging, "保存Image: %v\n", imageUri)
 				image, err := srv.IpfsClient.GetContent(imageUri)
