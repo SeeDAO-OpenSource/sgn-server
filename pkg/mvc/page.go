@@ -1,14 +1,21 @@
 package mvc
 
-import "github.com/gin-gonic/gin"
+import (
+	"strconv"
 
-type Page struct {
-	Limmit int
-	Skip   int
-}
+	"github.com/gin-gonic/gin"
+)
 
 func PageQuery(ctx *gin.Context) (int, int) {
-	var page Page
-	ctx.BindQuery(&page)
-	return page.Limmit, page.Skip
+	page := parseInt(ctx.Query("page"), 1)
+	pageSize := parseInt(ctx.Query("page_size"), 10)
+	return page, pageSize
+}
+
+func parseInt(v string, defaultValue int) int {
+	i, err := strconv.Atoi(v)
+	if err != nil {
+		return defaultValue
+	}
+	return i
 }

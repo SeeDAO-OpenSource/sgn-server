@@ -20,15 +20,16 @@ func (c *NftController) GetOwners(ctx *gin.Context) {
 		mvc.Error(ctx, errors.New("ntfaddr is required"))
 		return
 	}
+	page, pageSize := mvc.PageQuery(ctx)
 	srv, err := BuildNtfServiceV1()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	err = srv.PullData(&addr, false)
+	data, err := srv.GetOwners(addr, page, pageSize)
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	mvc.Ok(ctx, "")
+	mvc.Ok(ctx, data)
 }
