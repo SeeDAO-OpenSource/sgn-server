@@ -1,34 +1,44 @@
 package nftv1
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/waite-lee/nftserver/pkg/app"
 	"github.com/waite-lee/nftserver/pkg/server"
 )
 
 func InstallNftV1(ac *app.AppContext, server *server.ServerContext) error {
 	server.Route(initRoute)
-	err := SubscribeTransferLogs()
-	return err
+	ac.CmdBuilder.PreRun(func(cmd *cobra.Command) error {
+		bindOptions()
+		err := SubscribeTransferLogs()
+		return err
+	})
+	return nil
 }
 
 func initRoute(g *gin.Engine) {
-	ntfCtl := newNtfController()
-	route(&ntfCtl, g)
+	nftCtl := newNftController()
+	route(&nftCtl, g)
 }
 
 func SubscribeTransferLogs() error {
-	ntfService, err := BuildNtfServiceV1()
-	if err == nil {
-		address, err := ntfService.GetExistsAddresses()
-		if err == nil {
-			err1 := ntfService.SubscribeTransferLogs(address)
-			if err1 != nil {
-				log.Fatal(err1)
-			}
-		}
+	nftService, err := BuildNftServiceV1()
+	if err != nil {
+		return err
+	}
+	address, err := nftService.GetExistsAddresses()
+	if err != nil {
+		return err
+	}
+	err = nftService.SubscribeTransferLogs(address)
+	if err != nil {
+		return err
 	}
 	return err
+}
+
+func bindOptions() {
+	viper.UnmarshalKey("EtherScan", EsOptions)
 }

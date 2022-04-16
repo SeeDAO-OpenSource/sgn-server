@@ -11,9 +11,12 @@ var NftV1Set = wire.NewSet(
 	common.CommonSet,
 	erc721.NewErc721Service,
 	erc721.GetClient,
-	wire.Value(erc721.EsOptions),
+	wire.Value(EsOptions),
 	eth.GetClient,
 	NewMongoErc721TransferLogRepo,
 	NewMongoDbNftTokenRepo,
 	wire.Struct(new(NftService), "*"),
 )
+var EsOptions = &erc721.EtherScanOptions{
+	BaseURL: "https://api.etherscan.io/api?",
+}

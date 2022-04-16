@@ -7,7 +7,7 @@ import (
 	"github.com/google/wire"
 )
 
-func BuildNtfServiceV1() (*NftService, error) {
+func BuildNftServiceV1() (*NftService, error) {
 	wire.Build(
 		NftV1Set,
 	)

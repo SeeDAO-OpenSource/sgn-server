@@ -12,6 +12,6 @@ func InstallBlobV1(ac *app.AppContext, server *server.ServerContext) error {
 }
 
 func initRoute(g *gin.Engine) {
-	ntfCtl := newBlobController()
-	route(&ntfCtl, g)
+	nftCtl := newBlobController()
+	route(&nftCtl, g)
 }

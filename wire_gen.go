@@ -14,8 +14,6 @@ import (
 
 func BuildAppContext() (*app.AppContext, error) {
 	commandBuilder := app.NewCommandBuilder()
-	appContext := &app.AppContext{
-		CmdBuilder: commandBuilder,
-	}
+	appContext := app.NewAppContext(commandBuilder)
 	return appContext, nil
 }

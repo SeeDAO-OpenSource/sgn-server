@@ -2,7 +2,9 @@ package common
 
 import (
 	"github.com/google/wire"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/waite-lee/nftserver/pkg/app"
 	"github.com/waite-lee/nftserver/pkg/blob/file"
 	"github.com/waite-lee/nftserver/pkg/db/mongodb"
 	"github.com/waite-lee/nftserver/pkg/eth"
@@ -25,21 +27,26 @@ var IpfsOptions = &ipfs.IpfsOptions{
 	BaseURL: "https://ipfs.io/ipfs/",
 }
 
-var HttpOptions = &mvc.HttpClientOptions{
-	ProxyURL: "http://localhost:4780",
-}
+var HttpOptions = &mvc.HttpClientOptions{}
 
 var MongoOptions = &mongodb.MongoOptions{
 	URL: "mongodb://localhost:27017",
 }
 
 var FileOptions = &file.FileBlobStoreOptions{
-	BasePath: "D:/data",
+	BasePath: "data",
 }
 
 var EthOptions = eth.NewEthOptions()
 
-func init() {
+func AddCommonOptions(ac *app.AppContext) {
+	ac.CmdBuilder.PreRun(func(cmd *cobra.Command) error {
+		initOptions()
+		return nil
+	})
+}
+
+func initOptions() {
 	viper.UnmarshalKey("Ipfs", IpfsOptions)
 	viper.UnmarshalKey("HttpClient", HttpOptions)
 	viper.UnmarshalKey("Mongo", MongoOptions)

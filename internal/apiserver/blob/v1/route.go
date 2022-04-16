@@ -4,12 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func route(ntfctl *BlobController, g *gin.Engine) {
-	ntfGroup := g.Group("/api/v1")
+func route(nftctl *BlobController, g *gin.Engine) {
+	nftGroup := g.Group("/api/v1")
 	{
-		v1 := ntfGroup.Group("blob")
+		v1 := nftGroup.Group("blob")
 		{
-			v1.Any("*key", ntfctl.Get)
+			v1.Any("*key", nftctl.Get)
 		}
 	}
 }

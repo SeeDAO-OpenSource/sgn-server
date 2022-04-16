@@ -10,18 +10,18 @@ import (
 type NftController struct {
 }
 
-func newNtfController() NftController {
+func newNftController() NftController {
 	return NftController{}
 }
 
 func (c *NftController) GetOwners(ctx *gin.Context) {
-	addr := ctx.Param("ntfaddr")
+	addr := ctx.Param("nftaddr")
 	if addr == "" {
-		mvc.Error(ctx, errors.New("ntfaddr is required"))
+		mvc.Error(ctx, errors.New("nftaddr is required"))
 		return
 	}
 	page, pageSize := mvc.PageQuery(ctx)
-	srv, err := BuildNtfServiceV1()
+	srv, err := BuildNftServiceV1()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return

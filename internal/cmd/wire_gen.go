@@ -25,7 +25,7 @@ func BuildCommands(ac *app.AppContext) AppCommands {
 	appCommands := AppCommands{
 		Test:      testCmd,
 		ApiServer: apiServerCmd,
-		NtfPull:   nftPullCmd,
+		NftPull:   nftPullCmd,
 		Config:    configCmd,
 	}
 	return appCommands

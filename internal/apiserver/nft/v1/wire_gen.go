@@ -18,7 +18,7 @@ import (
 
 // Injectors from wire_inject.go:
 
-func BuildNtfServiceV1() (*NftService, error) {
+func BuildNftServiceV1() (*NftService, error) {
 	etherScanOptions := _wireEtherScanOptionsValue
 	httpClientOptions := _wireHttpClientOptionsValue
 	client, err := erc721.GetClient(etherScanOptions, httpClientOptions)
@@ -58,7 +58,7 @@ func BuildNtfServiceV1() (*NftService, error) {
 }
 
 var (
-	_wireEtherScanOptionsValue     = erc721.EsOptions
+	_wireEtherScanOptionsValue     = EsOptions
 	_wireHttpClientOptionsValue    = common.HttpOptions
 	_wireEthOptionsValue           = common.EthOptions
 	_wireIpfsOptionsValue          = common.IpfsOptions

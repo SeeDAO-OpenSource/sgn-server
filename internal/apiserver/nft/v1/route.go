@@ -4,12 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func route(ntfctl *NftController, g *gin.Engine) {
-	ntfGroup := g.Group("/api/v1")
+func route(nftctl *NftController, g *gin.Engine) {
+	nftGroup := g.Group("/api/v1")
 	{
-		v1 := ntfGroup.Group("nft")
+		v1 := nftGroup.Group("nft")
 		{
-			v1.GET(":ntfaddr", ntfctl.GetOwners)
+			v1.GET(":nftaddr", nftctl.GetOwners)
 		}
 	}
 }
