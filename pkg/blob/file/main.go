@@ -1,11 +1,17 @@
 package file
 
 import (
+	"bytes"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"io/ioutil"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 
+	"github.com/nfnt/resize"
 	"github.com/waite-lee/nftserver/pkg/blob"
 )
 
@@ -42,18 +48,14 @@ func (f *FileBlobStore) Exists(key *string) bool {
 	return isExsits(path)
 }
 
-func (f *FileBlobStore) Read(key *string) (*blob.BlobReader, error) {
+func (f *FileBlobStore) Read(key *string, process *blob.Process) (*blob.BlobReader, error) {
 	ukey := convertKey(*key)
 	path := filepath.Join(f.options.BasePath, ukey)
-	file, err := os.Open(path)
+	fileInfo, err := os.Stat(path)
 	if err != nil {
 		return nil, err
 	}
-	fileInfo, err := file.Stat()
-	if err != nil {
-		return nil, err
-	}
-	content, err := ioutil.ReadFile(path)
+	content, err := processFile(path, process)
 	if err != nil {
 		return nil, err
 	}
@@ -71,4 +73,37 @@ func isExsits(path string) bool {
 
 func convertKey(key string) string {
 	return url.QueryEscape(key)
+}
+
+func processFile(path string, process *blob.Process) ([]byte, error) {
+	var content []byte
+	var err error
+	if process == nil {
+		content, err = ioutil.ReadFile(path)
+	}
+	file, err := os.Open(path)
+	defer file.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	img, format, err := image.Decode(file)
+	log.Println(format)
+	if err == nil {
+		if process.Width > 0 && process.Height > 0 {
+			m := resize.Resize(uint(process.Width), uint(process.Height), img, resize.Lanczos3)
+			var buf bytes.Buffer
+			switch format {
+			case "png":
+				err = png.Encode(&buf, m)
+			case "jpeg":
+				err = jpeg.Encode(&buf, m, nil)
+			}
+			content = buf.Bytes()
+		}
+	}
+	if len(content) == 0 {
+		content, err = ioutil.ReadFile(path)
+	}
+	return content, err
 }
