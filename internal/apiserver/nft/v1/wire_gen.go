@@ -20,7 +20,8 @@ import (
 
 func BuildNtfServiceV1() (*NftService, error) {
 	etherScanOptions := _wireEtherScanOptionsValue
-	client, err := erc721.GetClient(etherScanOptions)
+	httpClientOptions := _wireHttpClientOptionsValue
+	client, err := erc721.GetClient(etherScanOptions, httpClientOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +31,6 @@ func BuildNtfServiceV1() (*NftService, error) {
 	if err != nil {
 		return nil, err
 	}
-	httpClientOptions := _wireHttpClientOptionsValue
 	requestClient := mvc.NewRequestClient(httpClientOptions)
 	ipfsOptions := _wireIpfsOptionsValue
 	ipfsClient, err := ipfs.GetClient(requestClient, ipfsOptions)
@@ -59,8 +59,8 @@ func BuildNtfServiceV1() (*NftService, error) {
 
 var (
 	_wireEtherScanOptionsValue     = erc721.EsOptions
-	_wireEthOptionsValue           = eth.Options
 	_wireHttpClientOptionsValue    = common.HttpOptions
+	_wireEthOptionsValue           = common.EthOptions
 	_wireIpfsOptionsValue          = common.IpfsOptions
 	_wireFileBlobStoreOptionsValue = common.FileOptions
 	_wireMongoOptionsValue         = common.MongoOptions

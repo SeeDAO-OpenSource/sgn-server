@@ -12,7 +12,7 @@ var NftV1Set = wire.NewSet(
 	erc721.NewErc721Service,
 	erc721.GetClient,
 	wire.Value(erc721.EsOptions),
-	eth.EthSet,
+	eth.GetClient,
 	NewMongoErc721TransferLogRepo,
 	NewMongoDbNftTokenRepo,
 	wire.Struct(new(NftService), "*"),

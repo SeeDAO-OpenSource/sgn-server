@@ -12,9 +12,6 @@ func BuildAppContext() (*app.AppContext, error) {
 	wire.Build(
 		app.NewCommandBuilder,
 		wire.Struct(new(app.AppContext), "*"),
-		// apiserver.ApiServerSet,
-		// cmd.CmdSet,
-		// options.OptionsSet,
 	)
 	return &app.AppContext{}, nil
 }

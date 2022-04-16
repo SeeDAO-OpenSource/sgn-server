@@ -10,7 +10,7 @@ import (
 	"github.com/waite-lee/nftserver/pkg/app"
 )
 
-// Injectors from inject_app.go:
+// Injectors from wire_inject.go:
 
 func BuildAppContext() (*app.AppContext, error) {
 	commandBuilder := app.NewCommandBuilder()

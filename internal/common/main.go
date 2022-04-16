@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/waite-lee/nftserver/pkg/blob/file"
 	"github.com/waite-lee/nftserver/pkg/db/mongodb"
+	"github.com/waite-lee/nftserver/pkg/eth"
 	"github.com/waite-lee/nftserver/pkg/ipfs"
 	"github.com/waite-lee/nftserver/pkg/mvc"
 )
@@ -18,6 +19,7 @@ var CommonSet = wire.NewSet(
 	wire.Value(HttpOptions),
 	wire.Value(MongoOptions),
 	wire.Value(FileOptions),
+	wire.Value(EthOptions),
 )
 var IpfsOptions = &ipfs.IpfsOptions{
 	BaseURL: "https://ipfs.io/ipfs/",
@@ -35,9 +37,12 @@ var FileOptions = &file.FileBlobStoreOptions{
 	BasePath: "D:/data",
 }
 
+var EthOptions = eth.NewEthOptions()
+
 func init() {
-	viper.UnmarshalKey("Ipfs", &IpfsOptions)
-	viper.UnmarshalKey("HttpClient", &HttpOptions)
-	viper.UnmarshalKey("Mongo", &MongoOptions)
-	viper.UnmarshalKey("FileBlobStore", &FileOptions)
+	viper.UnmarshalKey("Ipfs", IpfsOptions)
+	viper.UnmarshalKey("HttpClient", HttpOptions)
+	viper.UnmarshalKey("Mongo", MongoOptions)
+	viper.UnmarshalKey("BlobStore", FileOptions)
+	viper.UnmarshalKey("EthClient", EthOptions)
 }
