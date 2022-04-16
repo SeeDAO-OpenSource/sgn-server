@@ -4,13 +4,8 @@ import (
 	"sync"
 
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/google/wire"
 )
 
-var EthSet = wire.NewSet(
-	GetClient,
-	wire.Value(Options),
-)
 var (
 	client *ethclient.Client
 	once   sync.Once

@@ -59,7 +59,7 @@ func BuildNtfServiceV1() (*NftService, error) {
 
 var (
 	_wireEtherScanOptionsValue     = erc721.EsOptions
-	_wireEthOptionsValue           = eth.Options
+	_wireEthOptionsValue           = common.EthOptions
 	_wireHttpClientOptionsValue    = common.HttpOptions
 	_wireIpfsOptionsValue          = common.IpfsOptions
 	_wireFileBlobStoreOptionsValue = common.FileOptions
