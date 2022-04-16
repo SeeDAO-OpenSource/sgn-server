@@ -1,7 +1,0 @@
-apiserver:
-  port: 5000
-mongo:
-  url: mongodb://localhost:27017
-pull:
-  address: ""
-  skip: 0
