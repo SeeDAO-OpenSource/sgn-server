@@ -10,7 +10,9 @@
             "request": "launch",
             "mode": "auto",
             "program": ".",
-            "args": ["server"]
+            "args": [
+                "server"
+            ],
         }
     ]
 }

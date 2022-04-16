@@ -10,8 +10,8 @@ import (
 
 func BuildAppContext() (*app.AppContext, error) {
 	wire.Build(
+		app.NewAppContext,
 		app.NewCommandBuilder,
-		wire.Struct(new(app.AppContext), "*"),
 	)
 	return &app.AppContext{}, nil
 }

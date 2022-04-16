@@ -45,7 +45,7 @@ func excute() error {
 }
 
 func pullData() error {
-	srv, err := nftv1.BuildNtfServiceV1()
+	srv, err := nftv1.BuildNftServiceV1()
 	if err != nil {
 		return err
 	}

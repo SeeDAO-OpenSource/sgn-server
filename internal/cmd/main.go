@@ -17,7 +17,7 @@ var CmdSet = wire.NewSet(
 type AppCommands struct {
 	Test      *TestCmd
 	ApiServer *ApiServerCmd
-	NtfPull   *NftPullCmd
+	NftPull   *NftPullCmd
 	Config    *ConfigCmd
 }
 
@@ -25,10 +25,10 @@ func (ac *AppCommands) Build() {
 
 }
 
-func InstallCommands(ac *app.AppContext) {
+func AddCommands(ac *app.AppContext) {
 	cmds := BuildCommands(ac)
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Test))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.ApiServer))
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.NtfPull))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.NftPull))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Config))
 }

@@ -26,7 +26,7 @@ type NftService struct {
 	TokenRepo  NftTokenRepo
 }
 
-func NewNtfService() *NftService {
+func NewNftService() *NftService {
 	return &NftService{}
 }
 

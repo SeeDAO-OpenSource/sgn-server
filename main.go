@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/waite-lee/nftserver/internal/cmd"
+	"github.com/waite-lee/nftserver/internal/common"
 	"github.com/waite-lee/nftserver/pkg/app"
 )
 
@@ -17,7 +18,8 @@ func main() {
 
 func buildApp() (app.App, error) {
 	appContext, err := BuildAppContext()
-	cmd.InstallCommands(appContext)
+	common.AddCommonOptions(appContext)
+	cmd.AddCommands(appContext)
 	appContext.RootCmd("nftserver", "提供NFT相关功能")
 	app := appContext.Build()
 	return app, err

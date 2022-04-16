@@ -4,6 +4,12 @@ type AppContext struct {
 	CmdBuilder *CommandBuilder
 }
 
+func NewAppContext(cb *CommandBuilder) *AppContext {
+	return &AppContext{
+		CmdBuilder: cb,
+	}
+}
+
 func (ac *AppContext) Build() App {
 	rootCmd := ac.CmdBuilder.Build()
 	return newApp(rootCmd)

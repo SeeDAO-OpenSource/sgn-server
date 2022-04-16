@@ -31,7 +31,7 @@ func runPull() error {
 	if address == "" {
 		return errors.New("参数: address(合约地址)不能为空")
 	}
-	srv, err := nftv1.BuildNtfServiceV1()
+	srv, err := nftv1.BuildNftServiceV1()
 	if err != nil {
 		return err
 	}
