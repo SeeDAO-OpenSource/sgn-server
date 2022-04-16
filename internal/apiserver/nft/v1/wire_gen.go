@@ -25,12 +25,12 @@ func BuildNtfServiceV1() (*NftService, error) {
 	if err != nil {
 		return nil, err
 	}
-	erc721Service := erc721.NewErc721Service(client, etherScanOptions)
 	ethOptions := _wireEthOptionsValue
 	ethclientClient, err := eth.GetClient(ethOptions)
 	if err != nil {
 		return nil, err
 	}
+	erc721Service := erc721.NewErc721Service(client, etherScanOptions, ethclientClient)
 	requestClient := mvc.NewRequestClient(httpClientOptions)
 	ipfsOptions := _wireIpfsOptionsValue
 	ipfsClient, err := ipfs.GetClient(requestClient, ipfsOptions)

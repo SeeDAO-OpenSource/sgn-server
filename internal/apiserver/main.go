@@ -27,8 +27,13 @@ func NewApiServer(server *server.ServerContext, context *app.AppContext) ApiServ
 }
 
 func (as *ApiServer) Run() error {
-	nftv1.InstallNftV1(as.appContext, as.server)
-	blobv1.InstallBlobV1(as.appContext, as.server)
+	err := nftv1.InstallNftV1(as.appContext, as.server)
+	if err == nil {
+		err = blobv1.InstallBlobV1(as.appContext, as.server)
+	}
 	as.server.Init()
-	return as.server.GEngine.Run(":5000")
+	if err == nil {
+		err = as.server.GEngine.Run(":5000")
+	}
+	return err
 }

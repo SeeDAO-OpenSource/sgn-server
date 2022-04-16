@@ -6,8 +6,9 @@ import (
 	"github.com/waite-lee/nftserver/pkg/server"
 )
 
-func InstallBlobV1(ac *app.AppContext, server *server.ServerContext) {
+func InstallBlobV1(ac *app.AppContext, server *server.ServerContext) error {
 	server.Route(initRoute)
+	return nil
 }
 
 func initRoute(g *gin.Engine) {

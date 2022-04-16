@@ -7,6 +7,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/nanmu42/etherscan-api"
 	"github.com/waite-lee/nftserver/internal/apiserver/pkg/erc721"
@@ -40,7 +41,45 @@ func (srv *NftService) PullData(contract *string, skip int64, logging bool) erro
 	}
 	data = data[skip:]
 	logPrintf(logging, "共查询到 %v 条事件日志\n", len(data))
-	err = srv.LogRepo.InsertMany(convertTransfer(data))
+	return srv.pullTansferLogs(contract, data, logging)
+}
+
+func (srv *NftService) GetExistsAddresses() ([]string, error) {
+	return srv.LogRepo.GetAddresses()
+}
+
+func (srv *NftService) SubscribeTransferLogs(addresses []string) error {
+	err1 := srv.Erc.SubscribeFilterLogs(addresses, func(eventlog *types.Log) {
+		address := eventlog.Address.String()
+		tranfer, err := srv.Erc.GetTransferLog(eventlog)
+		if err == nil {
+			srv.pullTansferLogs(&address, []etherscan.ERC721Transfer{tranfer}, true)
+		} else {
+			log.Fatalln(err)
+		}
+	})
+	return err1
+}
+
+func (srv *NftService) isSeedaoNft(transfer *etherscan.ERC721Transfer) (bool, error) {
+	tranx, _, err := srv.Client.TransactionByHash(context.Background(), common.HexToHash(transfer.Hash))
+	if err != nil {
+		return false, err
+	}
+	abi, err := abi.JSON(strings.NewReader(seedaoNftAbi))
+	if err != nil {
+		return false, err
+	}
+	data := tranx.Data()
+	method, err := abi.MethodById(data[:4])
+	if err != nil {
+		return false, err
+	}
+	return method.Name == "mintWhiteList", nil
+}
+
+func (srv *NftService) pullTansferLogs(contract *string, data []etherscan.ERC721Transfer, logging bool) error {
+	err := srv.LogRepo.InsertMany(convertTransfer(data))
 	if err != nil {
 		return err
 	}
@@ -78,23 +117,6 @@ func (srv *NftService) PullData(contract *string, skip int64, logging bool) erro
 	}
 	srv.TokenRepo.InsertMany(result)
 	return err
-}
-
-func (srv *NftService) isSeedaoNft(transfer *etherscan.ERC721Transfer) (bool, error) {
-	tranx, _, err := srv.Client.TransactionByHash(context.Background(), common.HexToHash(transfer.Hash))
-	if err != nil {
-		return false, err
-	}
-	abi, err := abi.JSON(strings.NewReader(seedaoNftAbi))
-	if err != nil {
-		return false, err
-	}
-	data := tranx.Data()
-	method, err := abi.MethodById(data[:4])
-	if err != nil {
-		return false, err
-	}
-	return method.Name == "mintWhiteList", nil
 }
 
 func logPrintf(islog bool, format string, v ...interface{}) {

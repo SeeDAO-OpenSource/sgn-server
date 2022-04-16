@@ -26,7 +26,7 @@ func NewMongoDbNftTokenRepo(mongoClient *mongo.Client) NftTokenRepo {
 }
 
 func (r *MongoDbNftTokenRepo) InsertMany(data []*erc721.TokenInfo) error {
-	collection := r.MongoClient.Database("nft").Collection("token_seedao")
+	collection := r.tranfersCollection()
 	insertData := make([]interface{}, len(data))
 	for index, v := range data {
 		insertData[index] = v
@@ -36,11 +36,16 @@ func (r *MongoDbNftTokenRepo) InsertMany(data []*erc721.TokenInfo) error {
 }
 
 func (r *MongoDbNftTokenRepo) GetList(address string, page int, pageSize int) ([]erc721.TokenInfo, error) {
-	collection := r.MongoClient.Database("nft").Collection("token_seedao")
+	collection := r.tranfersCollection()
 	var data []erc721.TokenInfo
 	filter := bson.D{{"contract", address}}
 	findOptions := options.Find().SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
 	result, err := collection.Find(context.TODO(), filter, findOptions)
 	result.All(context.TODO(), &data)
 	return data, err
+}
+
+func (r *MongoDbNftTokenRepo) tranfersCollection() *mongo.Collection {
+	return r.MongoClient.Database("nft").Collection("token_seedao")
+
 }
