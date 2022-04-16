@@ -43,6 +43,6 @@ func init() {
 	viper.UnmarshalKey("Ipfs", IpfsOptions)
 	viper.UnmarshalKey("HttpClient", HttpOptions)
 	viper.UnmarshalKey("Mongo", MongoOptions)
-	viper.UnmarshalKey("FileBlobStore", FileOptions)
+	viper.UnmarshalKey("BlobStore", FileOptions)
 	viper.UnmarshalKey("EthClient", EthOptions)
 }
