@@ -12,6 +12,6 @@ func NewBlobService(store blob.BlobStore) *BlobService {
 	}
 }
 
-func (srv *BlobService) Get(key string) (*blob.BlobReader, error) {
-	return srv.store.Read(&key)
+func (srv *BlobService) Get(key string, process *blob.Process) (*blob.BlobReader, error) {
+	return srv.store.Read(&key, process)
 }
