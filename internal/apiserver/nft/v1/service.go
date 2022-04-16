@@ -33,11 +33,12 @@ func (srv *NftService) GetOwners(address string, page int, pageSize int) ([]erc7
 	return srv.TokenRepo.GetList(address, page, pageSize)
 }
 
-func (srv *NftService) PullData(contract *string, logging bool) error {
-	data, err := srv.Erc.GetTransferLogs(contract, 1, 30)
+func (srv *NftService) PullData(contract *string, skip int64, logging bool) error {
+	data, err := srv.Erc.GetTransferLogs(contract, 0, 10)
 	if err != nil {
 		return err
 	}
+	data = data[skip:]
 	logPrintf(logging, "共查询到 %v 条事件日志\n", len(data))
 	err = srv.LogRepo.InsertMany(convertTransfer(data))
 	if err != nil {

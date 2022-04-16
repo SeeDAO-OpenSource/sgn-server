@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile = "$HOME/.ntfserver.yaml"
+var cfgFile = "./conf.yaml"
 
 func init() {
 	initConfig()

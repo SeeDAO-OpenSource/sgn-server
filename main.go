@@ -18,7 +18,7 @@ func main() {
 func buildApp() (app.App, error) {
 	appContext, err := BuildAppContext()
 	cmd.InstallCommands(appContext)
-	appContext.RootCmd("nftserver", "提供NFT相关基础服务")
+	appContext.RootCmd("nftserver", "提供NFT相关功能")
 	app := appContext.Build()
 	return app, err
 }

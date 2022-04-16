@@ -21,10 +21,12 @@ func BuildCommands(ac *app.AppContext) AppCommands {
 	apiServerOptions := _wireApiServerOptionsValue
 	apiServerCmd := NewApiServerCmd(apiServer, apiServerOptions)
 	nftPullCmd := NewNftPullCmd()
+	configCmd := NewConfigCmd()
 	appCommands := AppCommands{
 		Test:      testCmd,
 		ApiServer: apiServerCmd,
 		NtfPull:   nftPullCmd,
+		Config:    configCmd,
 	}
 	return appCommands
 }

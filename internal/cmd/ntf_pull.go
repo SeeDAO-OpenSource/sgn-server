@@ -21,6 +21,8 @@ func NewNftPullCmd() *NftPullCmd {
 	cmd.PersistentFlags().StringP("address", "a", "", "合约地址")
 	cmd.MarkFlagRequired("address")
 	viper.BindPFlag("Pull.Address", cmd.PersistentFlags().Lookup("address"))
+	cmd.PersistentFlags().Int64P("skip", "s", 0, "跳过数量")
+	viper.BindPFlag("Pull.Skip", cmd.PersistentFlags().Lookup("skip"))
 	return (*NftPullCmd)(cmd)
 }
 
@@ -33,5 +35,6 @@ func runPull() error {
 	if err != nil {
 		return err
 	}
-	return srv.PullData(&address, true)
+	skip := viper.GetInt64("Pull.Skip")
+	return srv.PullData(&address, skip, true)
 }
