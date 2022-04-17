@@ -33,8 +33,11 @@ func (f *FileBlobStore) Save(key *string, content *[]byte, overwrite bool) error
 	ukey := convertKey(*key)
 	_, err := os.Stat(f.options.BasePath)
 	if os.IsNotExist(err) {
-		os.Mkdir(f.options.BasePath, os.ModePerm)
-		os.Chmod(f.options.BasePath, os.ModePerm)
+		dir, err := filepath.Abs(f.options.BasePath)
+		if err != nil {
+			return err
+		}
+		os.Mkdir(dir, os.ModePerm)
 	}
 	if overwrite || !isExsits(filepath.Join(f.options.BasePath, ukey)) {
 		path := filepath.Join(f.options.BasePath, ukey)

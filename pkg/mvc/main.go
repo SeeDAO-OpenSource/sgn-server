@@ -7,10 +7,10 @@ import (
 )
 
 type DataResult struct {
-	Status  int
-	Message string
-	Data    interface{}
-	Success bool
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+	Success bool        `json:"success"`
 }
 
 func Error(ctx *gin.Context, err error) {

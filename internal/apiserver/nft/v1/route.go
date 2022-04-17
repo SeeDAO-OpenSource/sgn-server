@@ -12,4 +12,6 @@ func route(nftctl *NftController, g *gin.Engine) {
 			v1.GET(":nftaddr", nftctl.GetOwners)
 		}
 	}
+
+	g.Static("/app", "./app")
 }
