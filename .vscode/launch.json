@@ -11,9 +11,9 @@
             "mode": "auto",
             "program": ".",
             "args": [
-                "pull",
-                "-t",
-                "404"
+                "server",
+                // "-t",
+                // "404"
             ],
         }
     ]
