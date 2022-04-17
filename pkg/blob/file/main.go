@@ -45,6 +45,7 @@ func (f *FileBlobStore) Save(key *string, content *[]byte, overwrite bool) error
 	}
 	return err
 }
+
 func (f *FileBlobStore) Exists(key *string) bool {
 	ukey := convertKey(*key)
 	path := filepath.Join(f.options.BasePath, ukey)

@@ -4,6 +4,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 
@@ -38,7 +39,7 @@ func NewHttpClient(hoptions *HttpClientOptions) *http.Client {
 		}).DialContext,
 		ForceAttemptHTTP2:     true,
 		MaxIdleConns:          100,
-		IdleConnTimeout:       90 * time.Second,
+		IdleConnTimeout:       60 * time.Second,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
 	}
@@ -53,16 +54,21 @@ func NewHttpClient(hoptions *HttpClientOptions) *http.Client {
 func getDefaultClient(hoptions *HttpClientOptions) *resty.Client {
 	once.Do(func() {
 		hc := NewHttpClient(hoptions)
-		client = resty.NewWithClient(hc)
+		client = resty.NewWithClient(hc).SetRetryCount(3).SetRetryWaitTime(time.Second * 3)
 	})
 	return client
 }
 
-func (c *RequestClient) Get(url string) ([]byte, error) {
+func (c *RequestClient) Get(url string, retry bool) ([]byte, error) {
 	hc := getDefaultClient(c.options)
-	resp, err := hc.R().
-		EnableTrace().
-		Get(url)
+	var request = hc.R().EnableTrace()
+	if retry {
+		request = request.AddRetryCondition(func(r *resty.Response, err error) bool {
+			content := r.String()
+			return err != nil || strings.Contains(content, "504 Gateway Time-out") || strings.Contains(content, "404 Not Found")
+		})
+	}
+	resp, err := request.Get(url)
 	if err != nil {
 		return []byte{}, err
 	}
