@@ -16,9 +16,16 @@ builds:
       - 386
       - amd64
 archives:
-  - replacements:
+  - 
+   files:
+    - app/**/*
+   replacements:
       linux: Linux
       windows: Windows
+  # Additional files/template/globs you want to add to the archive.
+  # Defaults are any files matching `LICENSE*`, `README*`, `CHANGELOG*`,
+  #  `license*`, `readme*` and `changelog*`.
+  
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -29,5 +36,4 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-      - '^data:'
-      - '^Dockerfile'
+
