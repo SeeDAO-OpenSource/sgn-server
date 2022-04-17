@@ -54,7 +54,7 @@ func NewHttpClient(hoptions *HttpClientOptions) *http.Client {
 func getDefaultClient(hoptions *HttpClientOptions) *resty.Client {
 	once.Do(func() {
 		hc := NewHttpClient(hoptions)
-		client = resty.NewWithClient(hc).SetRetryCount(3).SetRetryWaitTime(time.Second * 3)
+		client = resty.NewWithClient(hc).SetRetryCount(5).SetRetryWaitTime(time.Second * 3)
 	})
 	return client
 }
