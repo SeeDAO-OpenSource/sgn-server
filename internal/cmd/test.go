@@ -50,7 +50,7 @@ func pullData() error {
 		return err
 	}
 	addr := "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1"
-	err = srv.PullData(&addr, 0, true)
+	err = srv.PullData(&addr, 0, nil, true)
 	if err != nil {
 		return err
 	}

@@ -36,5 +36,4 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-      - '^data:'
-      - '^Dockerfile'
+      - '^Merge branch:'

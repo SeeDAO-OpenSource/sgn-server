@@ -42,7 +42,8 @@ func (c *IpfsClient) GetString(uri string) (string, error) {
 
 func (c *IpfsClient) GetContent(uri string) ([]byte, error) {
 	url := c.fullUrl(uri)
-	return c.requestClient.Get(url)
+	content, err := c.requestClient.Get(url, true)
+	return content, err
 }
 
 func (c *IpfsClient) fullUrl(uri string) string {
