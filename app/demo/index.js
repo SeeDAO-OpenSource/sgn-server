@@ -1,4 +1,6 @@
 
+var page = 1
+var pageSize = 20
 window.onload = (h, e) => {
     init()
 }
@@ -6,12 +8,14 @@ window.onload = (h, e) => {
 const baseURL="http://localhost:5000"
 
 const init = async () => {
-    const response = await fetch(baseURL+'/api/v1/nft/0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1?page=1&pageSize=10')
+    const nftList = document.getElementById("ntfList");
+    chidren = [...nftList.childNodes]
+    chidren.forEach(n => nftList.removeChild(n))
+    const response = await fetch(`${baseURL}/api/v1/nft/0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1?page=${page}&pageSize=${pageSize}`)
     const data = await response.json()
-    const ntfList = document.getElementById("ntfList");
-    if (data.success) {
+    if (data.success && data.data) {
         data.data.forEach(ntf => {
-            ntfList.appendChild(createNtfItem(ntf))
+            nftList.appendChild(createNtfItem(ntf))
         });
     }
 }
@@ -28,4 +32,17 @@ const createNtfItem = (data) => {
     item.appendChild(name)
     item.appendChild(img)
     return item
+}
+
+const prePage = async () => {
+    page--
+    if(page < 1) {
+        page = 1
+    }
+    await init()
+}
+
+const nextPage = async () => {
+    page++
+    await init()
 }
