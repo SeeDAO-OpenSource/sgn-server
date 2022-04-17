@@ -35,7 +35,7 @@ func (srv *NftService) GetOwners(address string, page int, pageSize int) ([]erc7
 }
 
 func (srv *NftService) PullData(contract *string, skip int, tokens []string, logging bool) error {
-	data, err := srv.Erc.GetTransferLogs(contract, 1, 30)
+	data, err := srv.Erc.GetTransferLogs(contract, 0, 30)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (srv *NftService) pullTansferLogs(contract *string, data []etherscan.ERC721
 	}
 	result := []*erc721.TokenInfo{}
 	failedTokens := []string{}
-	isSuccess := true
+	var isSuccess = true
 	for i, v := range data {
 		if !isSuccess {
 			failedTokens = append(failedTokens, v.TokenID.Int().String())
