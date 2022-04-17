@@ -35,7 +35,7 @@ func (srv *NftService) GetOwners(address string, page int, pageSize int) ([]erc7
 }
 
 func (srv *NftService) PullData(contract *string, skip int64, logging bool) error {
-	data, err := srv.Erc.GetTransferLogs(contract, 0, 30)
+	data, err := srv.Erc.GetTransferLogs(contract, 1, 30)
 	if err != nil {
 		return err
 	}
