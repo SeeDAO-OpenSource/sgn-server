@@ -1,5 +1,8 @@
 # SeeDao 官网v2 NFT 后端服务
 
+[![Build](https://github.com/SeeDAO-OpenSource/nft-server/actions/workflows/build.yml/badge.svg?branch=main&event=status)](https://github.com/SeeDAO-OpenSource/nft-server/actions/workflows/build.yml) [![Release](https://github.com/SeeDAO-OpenSource/nft-server/actions/workflows/release.yml/badge.svg?branch=main&event=release)](https://github.com/SeeDAO-OpenSource/nft-server/actions/workflows/release.yml)
+
+
 提供官网中以太坊相关的服务接口
 
 - 鲜花榜
