@@ -11,9 +11,11 @@
 
 ## 鲜花榜
 
-记录领取过 SeeDao NFT 账户的信息，提供展示最新的拥有 SeeDAO V2 NFT 的账户以及metadata的数据访问接口. 也是为了避免 OpenSea 提供的接口有访问次数限制的问题.
+记录领取过 SeeDao NFT 账户的信息，提供展示最新的拥有 SeeDAO V2 NFT 的账户以及metadata的数据访问接口.
 
 提供的接口如下：
 
-- [ ] 获取拥有 SeeDAO V2 NFT 的账户及 metadata 信息, 按获取时间倒序排序，返回最新的部分数据
+- [x] 获取拥有 SeeDAO V2 NFT 的发放信息， 按获取时间倒序排序，返回最新的部分数据
 - [ ] ...
+
+[查看Demo页面](http://124.221.160.98:5000/app/demo)
