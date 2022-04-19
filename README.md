@@ -19,3 +19,14 @@
 - [ ] ...
 
 [查看Demo页面](http://124.221.160.98:5000/app/demo)
+
+## 引用的开源库
+
+- [gin](https://github.com/gin-gonic/gin)
+- [wire](https://github.com/google/wire)
+- [cobra](https://github.com/spf13/cobra)
+- [viper](https://github.com/spf13/viper)
+- [mongo-driver](https://github.com/mongodb/mongo-go-driver)
+- [go-ethereum](https://github.com/ethereum/go-ethereum)
+- [etherscan-api](https://github.com/nanmu42/etherscan-api)
+- [resty](https://github.com/go-resty/resty)
