@@ -19,3 +19,6 @@ func (ac *AppContext) RootCmd(use string, description string) {
 	ac.CmdBuilder.RootCmd.Use = use
 	ac.CmdBuilder.RootCmd.Short = description
 }
+func (ac *AppContext) Version(version string) {
+	ac.CmdBuilder.RootCmd.Version = version
+}

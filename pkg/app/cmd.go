@@ -13,7 +13,6 @@ type CommandBuilder struct {
 
 func NewCommandBuilder() *CommandBuilder {
 	cb := &CommandBuilder{
-
 		preRunActions: []func(cmd *cobra.Command) error{},
 	}
 	cb.RootCmd = &cobra.Command{
