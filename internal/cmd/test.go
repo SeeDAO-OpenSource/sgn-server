@@ -13,12 +13,12 @@ func NewTestCmd() *TestCmd {
 		Use:   "test",
 		Short: "test",
 		Long:  "test",
-		RunE:  func(cmd *cobra.Command, args []string) error { return excute() },
+		RunE:  func(cmd *cobra.Command, args []string) error { return test() },
 	}
 	return (*TestCmd)(cmd)
 }
 
-func excute() error {
+func test() error {
 	log.Println("测试")
 	return nil
 }

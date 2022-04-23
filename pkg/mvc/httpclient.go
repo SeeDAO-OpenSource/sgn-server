@@ -1,6 +1,7 @@
 package mvc
 
 import (
+	"encoding/json"
 	"net"
 	"net/http"
 	"net/url"
@@ -84,4 +85,12 @@ func (c *RequestClient) GetString(url string) (string, error) {
 		return "", err
 	}
 	return resp.String(), nil
+}
+
+func (c *RequestClient) GetObj(url string, result interface{}) error {
+	content, err := c.Get(url, true)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(content, result)
 }
