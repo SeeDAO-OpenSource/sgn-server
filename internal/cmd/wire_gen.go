@@ -8,11 +8,12 @@ package cmd
 
 import (
 	"github.com/waite-lee/nftserver/internal/apiserver"
+	"github.com/waite-lee/nftserver/internal/common"
 	"github.com/waite-lee/nftserver/pkg/app"
 	"github.com/waite-lee/nftserver/pkg/server"
 )
 
-// Injectors from inject_cmd.go:
+// Injectors from wire_inject.go:
 
 func BuildCommands(ac *app.AppContext) AppCommands {
 	testCmd := NewTestCmd()
@@ -22,15 +23,19 @@ func BuildCommands(ac *app.AppContext) AppCommands {
 	apiServerCmd := NewApiServerCmd(apiServer, apiServerOptions)
 	nftPullCmd := NewNftPullCmd()
 	configCmd := NewConfigCmd()
+	httpClientOptions := _wireHttpClientOptionsValue
+	updateCmd := NewUpdateCmd(httpClientOptions)
 	appCommands := AppCommands{
 		Test:      testCmd,
 		ApiServer: apiServerCmd,
 		NftPull:   nftPullCmd,
 		Config:    configCmd,
+		Update:    updateCmd,
 	}
 	return appCommands
 }
 
 var (
-	_wireApiServerOptionsValue = apiserver.AsOptions
+	_wireApiServerOptionsValue  = apiserver.AsOptions
+	_wireHttpClientOptionsValue = common.HttpOptions
 )

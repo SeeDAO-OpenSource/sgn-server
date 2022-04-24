@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeeDao鲜花榜测试</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>SeeDao鲜花榜</div>
+        <div id="ntfList" class="nft-list">
+        </div>
+        <span>
+            <button onclick="prePage()">上一页</button>
+            <button onclick="nextPage()">下一页</button>
+            每页数量:
+            <input type="text" id="pagesizeInput" style="width: 40px;">
+            <button style="margin: 0 6px" onclick="submitPageSize()">确定</button>
+        </span>
+    </div>
+</body>
+<script src=" ./index.js"></script>
+<link rel="stylesheet" type="text/css" href="./index.css">
+
+</html>

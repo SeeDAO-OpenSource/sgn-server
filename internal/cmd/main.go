@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/google/wire"
 	"github.com/spf13/cobra"
+	"github.com/waite-lee/nftserver/internal/common"
 	"github.com/waite-lee/nftserver/pkg/app"
 )
 
@@ -13,6 +14,7 @@ var CmdSet = wire.NewSet(
 	NewNftPullCmd,
 	NewConfigCmd,
 	NewUpdateCmd,
+	common.CommonSet,
 )
 
 type AppCommands struct {
@@ -33,5 +35,5 @@ func AddCommands(ac *app.AppContext) {
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.ApiServer))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.NftPull))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Config))
-	// ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Update))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Update))
 }

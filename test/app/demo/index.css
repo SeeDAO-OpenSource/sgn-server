@@ -1,0 +1,20 @@
+.nft-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(120px, 1fr));
+    grid-gap: 20px;
+}
+
+.nft-item{
+
+}
+.nft-item .nft-item-img{
+    width: 120px;
+    height: 120px;
+
+}
+.nft-item .nft-item-name{
+    margin: 4px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
