@@ -18,7 +18,7 @@ func main() {
 
 func buildApp() (app.App, error) {
 	appContext, err := BuildAppContext()
-	appContext.Version = GetVersion()
+	appContext.Version(GetVersion().Version)
 	common.AddCommonOptions(appContext)
 	cmd.AddCommands(appContext)
 	appContext.RootCmd("nftserver", "提供NFT相关功能")

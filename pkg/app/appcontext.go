@@ -2,7 +2,6 @@ package app
 
 type AppContext struct {
 	CmdBuilder *CommandBuilder
-	Version    *VersionInfo
 }
 
 func NewAppContext(cb *CommandBuilder) *AppContext {
@@ -19,4 +18,7 @@ func (ac *AppContext) Build() App {
 func (ac *AppContext) RootCmd(use string, description string) {
 	ac.CmdBuilder.RootCmd.Use = use
 	ac.CmdBuilder.RootCmd.Short = description
+}
+func (ac *AppContext) Version(version string) {
+	ac.CmdBuilder.RootCmd.Version = version
 }
