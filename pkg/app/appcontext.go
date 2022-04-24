@@ -2,6 +2,7 @@ package app
 
 type AppContext struct {
 	CmdBuilder *CommandBuilder
+	Version    *VersionInfo
 }
 
 func NewAppContext(cb *CommandBuilder) *AppContext {
