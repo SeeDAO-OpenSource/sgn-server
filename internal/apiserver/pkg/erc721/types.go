@@ -5,12 +5,13 @@ import (
 )
 
 type TokenInfo struct {
-	ID       string        `json:"id" bson:"_id"`
-	Contract string        `json:"contract" bson:"contract"`
-	Name     string        `json:"name" bson:"name"`
-	TokenId  int64         `json:"token_id" bson:"token_id"`
-	TokenURI string        `json:"token_uri" bson:"token_uri"`
-	Metadata TokenMetadata `json:"metadata" bson:"metadata"`
+	ID        string        `json:"id" bson:"_id"`
+	Contract  string        `json:"contract" bson:"contract"`
+	Name      string        `json:"name" bson:"name"`
+	TokenId   int64         `json:"token_id" bson:"token_id"`
+	TokenURI  string        `json:"token_uri" bson:"token_uri"`
+	Metadata  TokenMetadata `json:"metadata" bson:"metadata"`
+	TimeStamp int64         `json:"timestamp" bson:"timestamp"`
 }
 
 type TokenMetadata struct {

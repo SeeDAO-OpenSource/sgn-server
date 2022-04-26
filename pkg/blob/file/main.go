@@ -59,7 +59,7 @@ func (f *FileBlobStore) Read(key *string, process *blob.Process) (*blob.BlobRead
 	path := filepath.Join(f.options.BasePath, ukey)
 	fileInfo, err := os.Stat(path)
 	if err != nil {
-		return nil, err
+		return nil, nil
 	}
 	content, err := f.processFile(path, process)
 	if err != nil {
