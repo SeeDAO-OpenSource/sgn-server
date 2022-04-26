@@ -36,7 +36,7 @@ func (srv *NftService) GetOwners(address string, page int, pageSize int) ([]erc7
 }
 
 func (srv *NftService) PullData(contract *string, skip int, tokens []string, logging bool) error {
-	data, err := srv.Erc.GetTransferLogs(contract, 0, 30)
+	data, err := srv.Erc.GetTransferLogs(contract, 0, 5)
 	if err != nil {
 		return err
 	}
@@ -77,6 +77,23 @@ func (srv *NftService) SubscribeTransferLogs(addresses []string) error {
 	return err1
 }
 
+func (srv *NftService) GetTokenImage(token string, address string, process *blob.Process) (*blob.BlobReader, error) {
+	tokeInfo, err := srv.TokenRepo.Get(token, address)
+	if err != nil {
+		return nil, err
+	}
+	uri := &tokeInfo.Metadata.Image
+	if uri == nil {
+		return nil, nil
+	}
+	if !srv.Blobstore.Exists(uri) {
+		if err := srv.SaveImage(uri, true); err != nil {
+			return nil, err
+		}
+	}
+	return srv.Blobstore.Read(uri, process)
+}
+
 func (srv *NftService) isSeedaoNft(transfer *etherscan.ERC721Transfer) (bool, error) {
 	tranx, _, err := srv.Client.TransactionByHash(context.Background(), common.HexToHash(transfer.Hash))
 	if err != nil {
@@ -108,20 +125,38 @@ func (srv *NftService) pullTansferLogs(contract *string, data []etherscan.ERC721
 
 func (srv *NftService) pullTokens(data []etherscan.ERC721Transfer, logging bool, contract *string) error {
 	result := []*erc721.TokenInfo{}
-	for i, v := range data {
-		logPrintf(logging, "正在处理第 %v 条\n", i)
-		if isSeedao, _ := srv.isSeedaoNft(&v); isSeedao {
-			tokenId := v.TokenID
-			logPrintf(logging, "***符合条件***: %d\n", tokenId.Int())
-			tokenInfo, err := srv.parseToken(contract, tokenId.Int(), logging)
+	for _, v := range data {
+		logPrintf(logging, "正在解析 TokenId: %v \n", v.TokenID.Int())
+		tokenId := v.TokenID
+		tokenInfo, err := srv.parseToken(contract, tokenId.Int(), logging)
+		tokenInfo.TimeStamp = v.TimeStamp.Time().UnixMilli()
+		if err != nil {
+			logPrintf(logging, "解析Token信息出错: %v\n", err.Error())
+			return err
+		}
+		result = append(result, tokenInfo)
+	}
+
+	if err := srv.TokenRepo.InsertMany(result); err != nil {
+		return err
+	}
+	logPrintf(logging, "插入Token信息成功\n")
+	logPrintf(logging, "开始缓存图片...\n")
+	errResult := []int64{}
+	for _, v := range result {
+		if v.Metadata.Image != "" {
+			err := srv.SaveImage(&v.Metadata.Image, logging)
 			if err != nil {
-				logPrintf(logging, "解析Token信息出错: %v\n", err.Error())
-				return err
+				logPrintf(logging, "保存图片: %s 出错, TokenId: %v\n", v.Metadata.Image, v.TokenId)
+				errResult = append(errResult, v.TokenId)
 			}
-			result = append(result, tokenInfo)
 		}
 	}
-	return srv.TokenRepo.InsertMany(result)
+	logPrintf(logging, "缓存图片完成, 出错数量: %v\n", len(errResult))
+	if len(errResult) > 0 {
+		logPrintf(logging, "出错Tokens: %v", errResult)
+	}
+	return nil
 }
 
 func (srv *NftService) parseToken(contract *string, tokenID *big.Int, logging bool) (*erc721.TokenInfo, error) {
@@ -145,14 +180,10 @@ func (srv *NftService) parseMetadata(uri string, logging bool) (*erc721.TokenMet
 		return nil, err
 	}
 	metadata := erc721.ParseMetadata(content)
-	imageUri := metadata.Image
-	if err := srv.saveImage(&imageUri, logging); err != nil {
-		return nil, err
-	}
 	return &metadata, nil
 }
 
-func (srv *NftService) saveImage(imageUri *string, logging bool) error {
+func (srv *NftService) SaveImage(imageUri *string, logging bool) error {
 	if !srv.Blobstore.Exists(imageUri) {
 		logPrintf(logging, "保存Image: %v\n", *imageUri)
 		image, err := srv.IpfsClient.GetContent(*imageUri)

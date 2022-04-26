@@ -13,6 +13,7 @@ import (
 type NftTokenRepo interface {
 	InsertMany(data []*erc721.TokenInfo) error
 	GetList(address string, page int, pageSize int) ([]erc721.TokenInfo, error)
+	Get(token string, address string) (erc721.TokenInfo, error)
 }
 
 type MongoDbNftTokenRepo struct {
@@ -39,10 +40,17 @@ func (r *MongoDbNftTokenRepo) GetList(address string, page int, pageSize int) ([
 	collection := r.tranfersCollection()
 	var data []erc721.TokenInfo
 	filter := bson.D{{"contract", address}}
-	findOptions := options.Find().SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
+	findOptions := options.Find().SetSort(bson.D{{"timestamp", -1}}).SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
 	result, err := collection.Find(context.TODO(), filter, findOptions)
 	result.All(context.TODO(), &data)
 	return data, err
+}
+
+func (r *MongoDbNftTokenRepo) Get(token string, address string) (erc721.TokenInfo, error) {
+	collection := r.tranfersCollection()
+	tokenInfo := erc721.TokenInfo{}
+	err := collection.FindOne(context.TODO(), bson.D{{"token_id", token}, {"contract", address}}).Decode(&tokenInfo)
+	return tokenInfo, err
 }
 
 func (r *MongoDbNftTokenRepo) tranfersCollection() *mongo.Collection {
