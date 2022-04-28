@@ -49,6 +49,8 @@ func (srv *Erc721Service) GetToken(ethClient *ethclient.Client, address *string,
 	tokenURI, err := token.TokenURI(nil, tokenId)
 	info.TokenURI = tokenURI
 	info.Contract = *address
+	tokenAddress, err := token.OwnerOf(nil, tokenId)
+	info.Owner = tokenAddress.Hex()
 	info.ID = info.Contract + strconv.FormatInt(info.TokenId, 10)
 	return &info, nil
 }

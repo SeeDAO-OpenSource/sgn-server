@@ -12,6 +12,7 @@ type TokenInfo struct {
 	TokenURI  string        `json:"token_uri" bson:"token_uri"`
 	Metadata  TokenMetadata `json:"metadata" bson:"metadata"`
 	TimeStamp int64         `json:"timestamp" bson:"timestamp"`
+	Owner     string        `json:"owner" bson:"owner"`
 }
 
 type TokenMetadata struct {
