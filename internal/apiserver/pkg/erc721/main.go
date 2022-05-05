@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/big"
 	"strconv"
+	"time"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -85,26 +86,32 @@ func (srv *Erc721Service) SubscribeFilterLogs(addresses []string, callback func(
 	return err
 }
 
-func (srv *Erc721Service) GetTransferLog(log *types.Log) (etherscan.ERC721Transfer, error) {
+func (srv *Erc721Service) GetTransferLog(log *types.Log) (*etherscan.ERC721Transfer, error) {
 	tranferLog := etherscan.ERC721Transfer{
-		Hash:             log.TxHash.String(),
-		From:             log.Topics[1].String(),
-		To:               log.Topics[2].String(),
+		Hash:             log.TxHash.Hex(),
+		From:             log.Topics[1].Hex(),
+		To:               log.Topics[2].Hex(),
 		BlockNumber:      int(log.BlockNumber),
-		BlockHash:        log.BlockHash.String(),
-		ContractAddress:  log.Address.String(),
+		BlockHash:        log.BlockHash.Hex(),
+		ContractAddress:  log.Address.Hex(),
 		TokenID:          (*etherscan.BigInt)(log.Topics[3].Big()),
 		TransactionIndex: int(log.TxIndex),
 	}
+	block, err := srv.ethClient.BlockByHash(context.Background(), log.BlockHash)
+	if err != nil {
+		return nil, err
+	}
 	tx, isppendding, err := srv.ethClient.TransactionByHash(context.Background(), log.TxHash)
-	if err == nil {
-		tranferLog.Nonce = int(tx.Nonce())
-		tranferLog.GasPrice = (*etherscan.BigInt)(tx.GasPrice())
-		tranferLog.GasUsed = int(tx.Gas())
-		tranferLog.CumulativeGasUsed = int(tx.GasFeeCap().Int64())
-		tranferLog.Input = string(tx.Data())
+	if err != nil {
+		return nil, err
 	} else if isppendding {
 		err = fmt.Errorf("tx is pending")
 	}
-	return tranferLog, err
+	tranferLog.Nonce = int(tx.Nonce())
+	tranferLog.GasPrice = (*etherscan.BigInt)(tx.GasPrice())
+	tranferLog.GasUsed = int(tx.Gas())
+	tranferLog.CumulativeGasUsed = int(tx.GasFeeCap().Int64())
+	tranferLog.Input = string(tx.Data())
+	tranferLog.TimeStamp = etherscan.Time(time.Unix(int64(block.Time()), 0))
+	return &tranferLog, err
 }
