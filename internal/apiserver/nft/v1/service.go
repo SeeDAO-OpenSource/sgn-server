@@ -69,7 +69,7 @@ func (srv *NftService) SubscribeTransferLogs(addresses []string) error {
 		address := eventlog.Address.String()
 		tranfer, err := srv.Erc.GetTransferLog(eventlog)
 		if err == nil {
-			srv.pullTansferLogs(&address, []etherscan.ERC721Transfer{tranfer}, true)
+			srv.pullTansferLogs(&address, []etherscan.ERC721Transfer{*tranfer}, true)
 		} else {
 			log.Fatalln(err)
 		}
