@@ -69,7 +69,7 @@ func (srv *NftService) SubscribeTransferLogs(addresses []string) error {
 		address := eventlog.Address.String()
 		tranfer, err := srv.Erc.GetTransferLog(eventlog)
 		if err == nil {
-			srv.pullTansferLogs(&address, []etherscan.ERC721Transfer{tranfer}, true)
+			srv.pullTansferLogs(&address, []etherscan.ERC721Transfer{*tranfer}, true)
 		} else {
 			log.Fatalln(err)
 		}
@@ -136,7 +136,6 @@ func (srv *NftService) pullTokens(data []etherscan.ERC721Transfer, logging bool,
 		}
 		result = append(result, tokenInfo)
 	}
-
 	if err := srv.TokenRepo.InsertMany(result); err != nil {
 		return err
 	}
@@ -152,6 +151,7 @@ func (srv *NftService) pullTokens(data []etherscan.ERC721Transfer, logging bool,
 			}
 		}
 	}
+
 	logPrintf(logging, "缓存图片完成, 出错数量: %v\n", len(errResult))
 	if len(errResult) > 0 {
 		logPrintf(logging, "出错Tokens: %v", errResult)
