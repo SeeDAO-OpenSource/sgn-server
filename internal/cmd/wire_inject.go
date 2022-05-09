@@ -5,8 +5,8 @@ package cmd
 
 import (
 	"github.com/google/wire"
-	"github.com/waite-lee/nftserver/internal/apiserver"
-	"github.com/waite-lee/nftserver/pkg/app"
+	"github.com/waite-lee/sgn/internal/apiserver"
+	"github.com/waite-lee/sgn/pkg/app"
 )
 
 func BuildCommands(ac *app.AppContext) AppCommands {

@@ -1,0 +1,15 @@
+apiserver:
+  port: 81
+mongo:
+  url: "mongodb://mongoadmin:07aY5abD68a23fPd@124.221.160.98:27017/?authSource=admin"
+pull:
+  address: 0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1
+  skip: 0
+HttpClient:
+  ProxyURL: http://localhost:4780
+EtherScan:
+  ApiKey: ZZKAMSFGQ6KEFD6ZWM3PSI5UAQ724KSY75
+EthClient:
+  DailUrl: wss://mainnet.infura.io/ws/v3/9aa3d95b3bc440fa88ea12eaa4456161
+BlobStore:
+  BasePath: D:/data

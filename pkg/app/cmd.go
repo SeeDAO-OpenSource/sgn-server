@@ -34,7 +34,7 @@ func NewCommandBuilder() *CommandBuilder {
 }
 
 func (b *CommandBuilder) Build() *cobra.Command {
-	b.RootCmd.PersistentFlags().StringP("config", "c", "", "config file (default is ./nftserver.yaml)")
+	b.RootCmd.PersistentFlags().StringP("config", "c", "", "config file (default is ./sgn.yaml)")
 	return b.RootCmd
 }
 

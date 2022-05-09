@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/waite-lee/nftserver/pkg/blob"
-	"github.com/waite-lee/nftserver/pkg/mvc"
+	"github.com/waite-lee/sgn/pkg/blob"
+	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 type BlobController struct {

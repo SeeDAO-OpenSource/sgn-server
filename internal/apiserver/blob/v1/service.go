@@ -1,6 +1,6 @@
 package blobv1
 
-import "github.com/waite-lee/nftserver/pkg/blob"
+import "github.com/waite-lee/sgn/pkg/blob"
 
 type BlobService struct {
 	store blob.BlobStore

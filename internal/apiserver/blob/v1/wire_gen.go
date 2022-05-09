@@ -7,8 +7,8 @@
 package blobv1
 
 import (
-	"github.com/waite-lee/nftserver/internal/common"
-	"github.com/waite-lee/nftserver/pkg/blob/file"
+	"github.com/waite-lee/sgn/internal/common"
+	"github.com/waite-lee/sgn/pkg/blob/file"
 )
 
 // Injectors from wire_inject.go:

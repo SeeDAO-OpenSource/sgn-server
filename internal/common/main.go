@@ -4,12 +4,12 @@ import (
 	"github.com/google/wire"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/nftserver/pkg/app"
-	"github.com/waite-lee/nftserver/pkg/blob/file"
-	"github.com/waite-lee/nftserver/pkg/db/mongodb"
-	"github.com/waite-lee/nftserver/pkg/eth"
-	"github.com/waite-lee/nftserver/pkg/ipfs"
-	"github.com/waite-lee/nftserver/pkg/mvc"
+	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/waite-lee/sgn/pkg/blob/file"
+	"github.com/waite-lee/sgn/pkg/db/mongodb"
+	"github.com/waite-lee/sgn/pkg/eth"
+	"github.com/waite-lee/sgn/pkg/ipfs"
+	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 var CommonSet = wire.NewSet(

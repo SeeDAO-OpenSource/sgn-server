@@ -11,8 +11,8 @@ import (
 
 	"github.com/google/go-github/v43/github"
 	"github.com/spf13/cobra"
-	"github.com/waite-lee/nftserver/pkg/mvc"
-	"github.com/waite-lee/nftserver/pkg/utils"
+	"github.com/waite-lee/sgn/pkg/mvc"
+	"github.com/waite-lee/sgn/pkg/utils"
 )
 
 type UpdateCmd cobra.Command

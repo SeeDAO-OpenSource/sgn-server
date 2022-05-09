@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"os/user"
 	"path"
 	"path/filepath"
 
@@ -11,14 +12,8 @@ import (
 )
 
 func initConfig(cfgFile string) {
-	crrDir, err := exec.LookPath(os.Args[0])
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	crrDir = path.Dir(crrDir)
-	viper.SetConfigName("nftserver")
-	viper.AddConfigPath(crrDir)
+	addHomePath()
+	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
 	if cfgFile != "" {
@@ -31,5 +26,17 @@ func initConfig(cfgFile string) {
 		log.Println("using config file: ", viper.ConfigFileUsed())
 	} else {
 		log.Fatal(err)
+	}
+}
+
+func addHomePath() {
+	crrDir, err := exec.LookPath(os.Args[0])
+	if err == nil {
+		crrDir = path.Dir(crrDir)
+		viper.AddConfigPath(crrDir)
+	}
+	u, err := user.Current()
+	if err == nil {
+		viper.AddConfigPath(path.Join(u.HomeDir, ".sgn"))
 	}
 }
