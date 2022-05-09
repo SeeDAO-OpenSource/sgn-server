@@ -1,6 +1,6 @@
 package main
 
-import "github.com/waite-lee/nftserver/pkg/app"
+import "github.com/waite-lee/sgn/pkg/app"
 
 var (
 	version string

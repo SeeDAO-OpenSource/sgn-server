@@ -3,7 +3,7 @@ package nftv1
 import (
 	"context"
 
-	"github.com/waite-lee/nftserver/pkg/db/mongodb"
+	"github.com/waite-lee/sgn/pkg/db/mongodb"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

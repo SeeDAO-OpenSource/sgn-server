@@ -7,7 +7,7 @@
 package main
 
 import (
-	"github.com/waite-lee/nftserver/pkg/app"
+	"github.com/waite-lee/sgn/pkg/app"
 )
 
 // Injectors from wire_inject.go:

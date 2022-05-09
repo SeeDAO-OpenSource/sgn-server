@@ -5,7 +5,7 @@ package main
 
 import (
 	"github.com/google/wire"
-	"github.com/waite-lee/nftserver/pkg/app"
+	"github.com/waite-lee/sgn/pkg/app"
 )
 
 func BuildAppContext() (*app.AppContext, error) {

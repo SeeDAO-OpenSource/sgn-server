@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/waite-lee/nftserver/pkg/options"
+	"github.com/waite-lee/sgn/pkg/options"
 )
 
 type App struct {

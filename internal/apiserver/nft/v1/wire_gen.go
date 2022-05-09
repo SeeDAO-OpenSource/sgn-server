@@ -7,13 +7,13 @@
 package nftv1
 
 import (
-	"github.com/waite-lee/nftserver/internal/apiserver/pkg/erc721"
-	"github.com/waite-lee/nftserver/internal/common"
-	"github.com/waite-lee/nftserver/pkg/blob/file"
-	"github.com/waite-lee/nftserver/pkg/db/mongodb"
-	"github.com/waite-lee/nftserver/pkg/eth"
-	"github.com/waite-lee/nftserver/pkg/ipfs"
-	"github.com/waite-lee/nftserver/pkg/mvc"
+	"github.com/waite-lee/sgn/internal/apiserver/pkg/erc721"
+	"github.com/waite-lee/sgn/internal/common"
+	"github.com/waite-lee/sgn/pkg/blob/file"
+	"github.com/waite-lee/sgn/pkg/db/mongodb"
+	"github.com/waite-lee/sgn/pkg/eth"
+	"github.com/waite-lee/sgn/pkg/ipfs"
+	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 // Injectors from wire_inject.go:

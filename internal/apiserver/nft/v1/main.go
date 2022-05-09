@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/nftserver/pkg/app"
-	"github.com/waite-lee/nftserver/pkg/server"
+	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/waite-lee/sgn/pkg/server"
 )
 
 func InstallNftV1(ac *app.AppContext, server *server.ServerContext) error {

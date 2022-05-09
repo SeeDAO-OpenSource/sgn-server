@@ -2,8 +2,8 @@ package blobv1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/waite-lee/nftserver/pkg/app"
-	"github.com/waite-lee/nftserver/pkg/server"
+	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/waite-lee/sgn/pkg/server"
 )
 
 func InstallBlobV1(ac *app.AppContext, server *server.ServerContext) error {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	nftv1 "github.com/waite-lee/nftserver/internal/apiserver/nft/v1"
+	nftv1 "github.com/waite-lee/sgn/internal/apiserver/nft/v1"
 )
 
 type NftPullCmd cobra.Command

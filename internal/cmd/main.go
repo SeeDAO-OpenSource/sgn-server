@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/google/wire"
 	"github.com/spf13/cobra"
-	"github.com/waite-lee/nftserver/internal/common"
-	"github.com/waite-lee/nftserver/pkg/app"
+	"github.com/waite-lee/sgn/internal/common"
+	"github.com/waite-lee/sgn/pkg/app"
 )
 
 var CmdSet = wire.NewSet(

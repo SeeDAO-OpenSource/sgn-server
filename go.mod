@@ -1,6 +1,6 @@
-module github.com/waite-lee/nftserver
+module github.com/waite-lee/sgn
 
-replace github.com/waite-lee/nftserver => ./nftserver
+replace github.com/waite-lee/sgn => ./sgn
 
 go 1.17
 

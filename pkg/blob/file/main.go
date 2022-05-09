@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/nfnt/resize"
-	"github.com/waite-lee/nftserver/pkg/blob"
+	"github.com/waite-lee/sgn/pkg/blob"
 )
 
 type FileBlobStoreOptions struct {

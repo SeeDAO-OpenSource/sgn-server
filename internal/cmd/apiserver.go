@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/nftserver/internal/apiserver"
+	"github.com/waite-lee/sgn/internal/apiserver"
 )
 
 type ApiServerCmd cobra.Command

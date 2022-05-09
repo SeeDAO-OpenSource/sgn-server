@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/nanmu42/etherscan-api"
-	"github.com/waite-lee/nftserver/pkg/mvc"
+	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 var (

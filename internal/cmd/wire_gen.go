@@ -7,10 +7,10 @@
 package cmd
 
 import (
-	"github.com/waite-lee/nftserver/internal/apiserver"
-	"github.com/waite-lee/nftserver/internal/common"
-	"github.com/waite-lee/nftserver/pkg/app"
-	"github.com/waite-lee/nftserver/pkg/server"
+	"github.com/waite-lee/sgn/internal/apiserver"
+	"github.com/waite-lee/sgn/internal/common"
+	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/waite-lee/sgn/pkg/server"
 )
 
 // Injectors from wire_inject.go:
