@@ -2,8 +2,6 @@ package common
 
 import (
 	"github.com/google/wire"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/waite-lee/sgn/pkg/app"
 	"github.com/waite-lee/sgn/pkg/blob/file"
 	"github.com/waite-lee/sgn/pkg/db/mongodb"
@@ -39,17 +37,10 @@ var FileOptions = &file.FileBlobStoreOptions{
 
 var EthOptions = eth.NewEthOptions()
 
-func AddCommonOptions(ac *app.AppContext) {
-	ac.CmdBuilder.PreRun(func(cmd *cobra.Command) error {
-		initOptions()
-		return nil
-	})
-}
-
-func initOptions() {
-	viper.UnmarshalKey("Ipfs", IpfsOptions)
-	viper.UnmarshalKey("HttpClient", HttpOptions)
-	viper.UnmarshalKey("Mongo", MongoOptions)
-	viper.UnmarshalKey("BlobStore", FileOptions)
-	viper.UnmarshalKey("EthClient", EthOptions)
+func AddCommonOptions(ac *app.AppBuilder) {
+	ac.BindOptions("Ipfs", IpfsOptions)
+	ac.BindOptions("HttpClient", HttpOptions)
+	ac.BindOptions("Mongo", MongoOptions)
+	ac.BindOptions("BlobStore", FileOptions)
+	ac.BindOptions("EthClient", EthOptions)
 }

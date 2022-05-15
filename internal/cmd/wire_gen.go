@@ -7,20 +7,15 @@
 package cmd
 
 import (
-	"github.com/waite-lee/sgn/internal/apiserver"
 	"github.com/waite-lee/sgn/internal/common"
 	"github.com/waite-lee/sgn/pkg/app"
-	"github.com/waite-lee/sgn/pkg/server"
 )
 
 // Injectors from wire_inject.go:
 
-func BuildCommands(ac *app.AppContext) AppCommands {
+func BuildCommands(buider *app.AppBuilder) AppCommands {
 	testCmd := NewTestCmd()
-	serverContext := server.NewServerContext()
-	apiServer := apiserver.NewApiServer(serverContext, ac)
-	apiServerOptions := _wireApiServerOptionsValue
-	apiServerCmd := NewApiServerCmd(apiServer, apiServerOptions)
+	apiServerCmd := NewApiServerCmd(buider)
 	nftPullCmd := NewNftPullCmd()
 	configCmd := NewConfigCmd()
 	httpClientOptions := _wireHttpClientOptionsValue
@@ -36,6 +31,5 @@ func BuildCommands(ac *app.AppContext) AppCommands {
 }
 
 var (
-	_wireApiServerOptionsValue  = apiserver.AsOptions
 	_wireHttpClientOptionsValue = common.HttpOptions
 )

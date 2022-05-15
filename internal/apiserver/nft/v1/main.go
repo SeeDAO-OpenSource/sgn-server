@@ -2,25 +2,27 @@ package nftv1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/waite-lee/sgn/internal/apiserver/pkg/erc721"
 	"github.com/waite-lee/sgn/pkg/server"
 )
 
-func InstallNftV1(ac *app.AppContext, server *server.ServerContext) error {
-	server.Route(initRoute)
-	ac.CmdBuilder.PreRun(func(cmd *cobra.Command) error {
-		bindOptions()
-		err := SubscribeTransferLogs()
-		return err
+var EsOptions = &erc721.EtherScanOptions{
+	BaseURL: "https://api.etherscan.io/api?",
+}
+
+func AddNftV1(builder *server.ServerBuiler) error {
+	builder.Configure(func(s *server.Server) error {
+		return initRoute(s.G)
 	})
+	builder.AppBuilder.BindOptions("EtherScan", EsOptions)
 	return nil
 }
 
-func initRoute(g *gin.Engine) {
+func initRoute(g *gin.Engine) error {
 	nftCtl := newNftController()
 	route(&nftCtl, g)
+	SubscribeTransferLogs()
+	return nil
 }
 
 func SubscribeTransferLogs() error {
@@ -37,8 +39,4 @@ func SubscribeTransferLogs() error {
 		return err
 	}
 	return err
-}
-
-func bindOptions() {
-	viper.UnmarshalKey("EtherScan", EsOptions)
 }

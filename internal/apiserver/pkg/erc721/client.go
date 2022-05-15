@@ -1,7 +1,6 @@
 package erc721
 
 import (
-	"errors"
 	"sync"
 
 	"github.com/nanmu42/etherscan-api"
@@ -14,9 +13,6 @@ var (
 )
 
 func GetClient(options *EtherScanOptions, httpOptions *mvc.HttpClientOptions) (*etherscan.Client, error) {
-	if options.ApiKey == "" {
-		return nil, errors.New("未配置 EtherScan Api Key")
-	}
 	once.Do(func() {
 		httpClient := mvc.NewHttpClient(httpOptions)
 		client = etherscan.NewCustomized(etherscan.Customization{

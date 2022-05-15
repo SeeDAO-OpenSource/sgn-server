@@ -1,5 +1,5 @@
-apiserver:
-  port: 81
+server:
+  port: 5200
 mongo:
   url: "mongodb://mongoadmin:07aY5abD68a23fPd@124.221.160.98:27017/?authSource=admin"
 pull:

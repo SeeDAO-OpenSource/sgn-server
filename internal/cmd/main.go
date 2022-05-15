@@ -25,11 +25,7 @@ type AppCommands struct {
 	Update    *UpdateCmd
 }
 
-func (ac *AppCommands) Build() {
-
-}
-
-func AddCommands(ac *app.AppContext) {
+func AddCommands(ac *app.AppBuilder) {
 	cmds := BuildCommands(ac)
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Test))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.ApiServer))

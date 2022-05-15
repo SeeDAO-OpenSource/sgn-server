@@ -9,7 +9,7 @@ func route(blobCtroller *BlobController, g *gin.Engine) {
 	{
 		v1 := nftGroup.Group("blob")
 		{
-			v1.Any("*key", func(ctx *gin.Context) {
+			v1.GET("*key", func(ctx *gin.Context) {
 				blobCtroller.Get(ctx)
 			})
 		}

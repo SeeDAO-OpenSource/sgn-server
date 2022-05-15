@@ -2,8 +2,11 @@ package cmd
 
 import (
 	"log"
+	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"github.com/waite-lee/sgn/pkg/db/mongodb"
 )
 
 type TestCmd cobra.Command
@@ -20,5 +23,12 @@ func NewTestCmd() *TestCmd {
 
 func test() error {
 	log.Println("测试")
+	v := os.Getenv("SGN_PULL_ADDRESS")
+	log.Println(v)
+	gs := viper.GetString("Mongo.URL")
+	log.Println(gs)
+	options := mongodb.MongoOptions{}
+	viper.UnmarshalKey("Mongo", &options)
+	log.Println(options.URL)
 	return nil
 }

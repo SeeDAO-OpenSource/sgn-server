@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": ".",
             "args": [
-                "update",
+                "server",
                 // "-t",
                 // "404"
             ],
