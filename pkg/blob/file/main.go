@@ -33,13 +33,9 @@ func NewFileBlobStore(options *FileBlobStoreOptions) blob.BlobStore {
 
 func (f *FileBlobStore) Save(key *string, content *[]byte, overwrite bool) error {
 	ukey := f.convertKey(*key)
-	_, err := os.Stat(f.options.BasePath)
-	if os.IsNotExist(err) {
-		dir, err := filepath.Abs(f.options.BasePath)
-		if err != nil {
-			return err
-		}
-		os.MkdirAll(dir, os.ModePerm)
+	err := os.MkdirAll(f.options.BasePath, os.ModePerm)
+	if err != nil {
+		return err
 	}
 	if overwrite || !f.isExsits(filepath.Join(f.options.BasePath, ukey)) {
 		path := filepath.Join(f.options.BasePath, ukey)

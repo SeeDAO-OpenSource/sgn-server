@@ -1,17 +1,16 @@
 package blobv1
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/waite-lee/sgn/pkg/app"
 	"github.com/waite-lee/sgn/pkg/server"
 )
 
-func InstallBlobV1(ac *app.AppContext, server *server.ServerContext) error {
-	server.Route(initRoute)
+func AddBlobV1(buider *server.ServerBuiler) error {
+	buider.Configure(initRoute)
 	return nil
 }
 
-func initRoute(g *gin.Engine) {
+func initRoute(s *server.Server) error {
 	nftCtl := newBlobController()
-	route(&nftCtl, g)
+	route(&nftCtl, s.G)
+	return nil
 }

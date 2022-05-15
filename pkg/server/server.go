@@ -1,28 +1,31 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"strconv"
 
-type ServerContext struct {
-	GEngine *gin.Engine
-	router  []RouteBuildFunc
+	"github.com/gin-gonic/gin"
+)
+
+type ServerOptions struct {
+	Port      int
+	ServerURL string
 }
 
-func NewServerContext() *ServerContext {
-	return &ServerContext{
-		GEngine: gin.Default(),
-		router:  make([]RouteBuildFunc, 0, 0),
+type Server struct {
+	G       *gin.Engine
+	Options *ServerOptions
+}
+
+func NewServer(g *gin.Engine, options *ServerOptions) *Server {
+	return &Server{
+		G:       g,
+		Options: options,
 	}
 }
 
-func (ac *ServerContext) Route(buildFunc RouteBuildFunc) {
-	ac.router = append(ac.router, buildFunc)
-}
-
-func (ac *ServerContext) Init() {
-	if ac.router != nil {
-		for _, r := range ac.router {
-			r(ac.GEngine)
-		}
+func (s Server) Run() error {
+	if s.Options.Port == 0 {
+		return s.G.Run(":4100")
 	}
-
+	return s.G.Run(":" + strconv.Itoa(s.Options.Port))
 }

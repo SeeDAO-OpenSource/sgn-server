@@ -7,6 +7,7 @@ import (
 	"os/user"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -15,6 +16,8 @@ func initConfig(cfgFile string) {
 	addHomePath()
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
+	viper.SetEnvPrefix("SGN")
 	viper.AutomaticEnv()
 	if cfgFile != "" {
 		path, err := filepath.Abs(cfgFile)
@@ -22,10 +25,14 @@ func initConfig(cfgFile string) {
 			viper.SetConfigFile(path)
 		}
 	}
-	if err := viper.ReadInConfig(); err == nil {
+}
+
+func readConfig() {
+	err := viper.ReadInConfig()
+	if err == nil {
 		log.Println("using config file: ", viper.ConfigFileUsed())
 	} else {
-		log.Fatal(err)
+		log.Println("read config file error: ", err)
 	}
 }
 
