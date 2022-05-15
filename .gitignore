@@ -19,5 +19,5 @@
 dist/
 
 sgn.yaml
-config.*.yaml
+config.yaml
 data/

@@ -1,0 +1,15 @@
+server:
+  port: 5200
+mongo:
+  url: "mongodb://user:passwd@127.0.0.1:27017/?authSource=admin"
+pull:
+  address: 0x23f111111111111111111111111
+  skip: 0
+#HttpClient:
+  #ProxyURL: http://localhost:4780
+EtherScan:
+  ApiKey: ApiKey
+EthClient:
+  DailUrl: wss://mainnet.infura.io/ws/v3/xxxxxxx
+BlobStore:
+  BasePath: ./data
