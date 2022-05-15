@@ -9,10 +9,9 @@ func route(nftctl *NftController, g *gin.Engine) {
 	{
 		v1 := nftGroup.Group("nft")
 		{
-			v1.GET(":addr", nftctl.GetOwners)
-			v1.GET(":addr/image/:token", nftctl.GetImage)
+			v1.GET("", nftctl.GetOwners)
+			v1.GET("image/:token", nftctl.GetImage)
 		}
 	}
-
 	g.Static("/app", "./app")
 }
