@@ -5,13 +5,13 @@ window.onload = (h, e) => {
     init()
 }
 
-const baseURL = "http://localhost:5000"
+const baseURL = "{ServerURL}"
 
 const init = async () => {
     const nftList = document.getElementById("ntfList");
     chidren = [...nftList.childNodes]
     chidren.forEach(n => nftList.removeChild(n))
-    const response = await fetch(`${baseURL}/api/v1/nft/0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1?page=${page}&page_size=${pageSize}`)
+    const response = await fetch(`${baseURL}/api/v1/nft?page=${page}&page_size=${pageSize}`)
     const data = await response.json()
     if (data.success && data.data) {
         data.data.forEach(ntf => {

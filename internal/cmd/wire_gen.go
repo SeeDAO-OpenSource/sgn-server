@@ -16,7 +16,7 @@ import (
 func BuildCommands(buider *app.AppBuilder) AppCommands {
 	testCmd := NewTestCmd()
 	apiServerCmd := NewApiServerCmd(buider)
-	nftPullCmd := NewNftPullCmd()
+	nftPullCmd := NewNftPullCmd(buider)
 	configCmd := NewConfigCmd()
 	httpClientOptions := _wireHttpClientOptionsValue
 	updateCmd := NewUpdateCmd(httpClientOptions)

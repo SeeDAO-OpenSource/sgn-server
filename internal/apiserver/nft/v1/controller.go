@@ -17,18 +17,13 @@ func newNftController() NftController {
 }
 
 func (c *NftController) GetOwners(ctx *gin.Context) {
-	addr := ctx.Param("addr")
-	if addr == "" {
-		mvc.Error(ctx, errors.New("nftaddr is required"))
-		return
-	}
 	page, pageSize := mvc.PageQuery(ctx)
 	srv, err := BuildNftServiceV1()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	data, err := srv.GetOwners(addr, page, pageSize)
+	data, err := srv.GetOwners("0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", page, pageSize)
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
@@ -37,10 +32,9 @@ func (c *NftController) GetOwners(ctx *gin.Context) {
 }
 
 func (c *NftController) GetImage(ctx *gin.Context) {
-	addr := ctx.Param("addr")
 	token := ctx.Param("token")
 	service, err := BuildNftServiceV1()
-	reader, err := service.GetTokenImage(token, addr, parseProcess(ctx))
+	reader, err := service.GetTokenImage(token, "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", parseProcess(ctx))
 	if err != nil {
 		mvc.Error(ctx, err)
 		return

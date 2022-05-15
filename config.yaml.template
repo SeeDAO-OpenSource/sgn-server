@@ -1,5 +1,6 @@
 server:
   port: 5200
+  ServerURL: http://localhost:5200
 mongo:
   url: "mongodb://user:passwd@127.0.0.1:27017/?authSource=admin"
 pull:

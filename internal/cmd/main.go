@@ -26,6 +26,7 @@ type AppCommands struct {
 }
 
 func AddCommands(ac *app.AppBuilder) {
+	common.AddCommonOptions(ac)
 	cmds := BuildCommands(ac)
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Test))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.ApiServer))

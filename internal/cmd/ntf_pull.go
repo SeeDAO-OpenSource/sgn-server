@@ -6,12 +6,12 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	nftv1 "github.com/waite-lee/sgn/internal/apiserver/nft/v1"
+	"github.com/waite-lee/sgn/pkg/app"
 )
 
 type NftPullCmd cobra.Command
 
-func NewNftPullCmd() *NftPullCmd {
-
+func NewNftPullCmd(builder *app.AppBuilder) *NftPullCmd {
 	cmd := &cobra.Command{
 		Use:   "pull",
 		Short: "拉取nft信息",
