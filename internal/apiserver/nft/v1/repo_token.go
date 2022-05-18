@@ -39,8 +39,8 @@ func (r *MongoDbNftTokenRepo) InsertMany(data []*erc721.TokenInfo) error {
 func (r *MongoDbNftTokenRepo) GetList(address string, page int, pageSize int) ([]erc721.TokenInfo, error) {
 	collection := r.tranfersCollection()
 	var data []erc721.TokenInfo
-	filter := bson.D{{"contract", address}}
-	findOptions := options.Find().SetSort(bson.D{{"timestamp", -1}}).SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
+	filter := bson.D{{Key: "contract", Value: address}}
+	findOptions := options.Find().SetSort(bson.D{{Key: "timestamp", Value: -1}}).SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
 	result, err := collection.Find(context.TODO(), filter, findOptions)
 	result.All(context.TODO(), &data)
 	return data, err
@@ -49,7 +49,7 @@ func (r *MongoDbNftTokenRepo) GetList(address string, page int, pageSize int) ([
 func (r *MongoDbNftTokenRepo) Get(token string, address string) (erc721.TokenInfo, error) {
 	collection := r.tranfersCollection()
 	tokenInfo := erc721.TokenInfo{}
-	err := collection.FindOne(context.TODO(), bson.D{{"token_id", token}, {"contract", address}}).Decode(&tokenInfo)
+	err := collection.FindOne(context.TODO(), bson.D{{Key: "token_id", Value: token}, {Key: "contract", Value: address}}).Decode(&tokenInfo)
 	return tokenInfo, err
 }
 
