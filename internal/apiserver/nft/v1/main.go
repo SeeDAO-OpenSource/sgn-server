@@ -30,13 +30,15 @@ func SubscribeTransferLogs() error {
 	if err != nil {
 		return err
 	}
-	address, err := nftService.GetExistsAddresses()
+	addresses, err := nftService.GetExistsAddresses()
 	if err != nil {
 		return err
 	}
-	err = nftService.SubscribeTransferLogs(address)
-	if err != nil {
-		return err
+	if len(addresses) > 0 {
+		err = nftService.SubscribeTransferLogs(addresses)
+		if err != nil {
+			return err
+		}
 	}
-	return err
+	return nil
 }
