@@ -3,8 +3,8 @@ package erc721
 import (
 	"sync"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 	"github.com/nanmu42/etherscan-api"
-	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 var (

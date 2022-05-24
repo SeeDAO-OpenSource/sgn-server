@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"strings"
 
-	blobv1 "github.com/waite-lee/sgn/internal/apiserver/blob/v1"
-	sgnv1 "github.com/waite-lee/sgn/internal/apiserver/sgn/v1"
-	"github.com/waite-lee/sgn/pkg/server"
+	blobv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/blob/v1"
+	sgnv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn/v1"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 )
 
 func AddApiServer(builder *server.ServerBuiler) {

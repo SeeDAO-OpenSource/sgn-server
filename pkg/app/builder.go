@@ -1,8 +1,8 @@
 package app
 
 import (
+	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/sgn/pkg/utils"
 )
 
 type AppBuilder struct {

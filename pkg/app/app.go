@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/options"
 	"github.com/spf13/cobra"
-	"github.com/waite-lee/sgn/pkg/options"
 )
 
 type App struct {

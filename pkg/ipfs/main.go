@@ -4,7 +4,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/waite-lee/sgn/pkg/mvc"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 )
 
 type IpfsOptions struct {

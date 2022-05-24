@@ -17,7 +17,5 @@
 *.db
 
 dist/
-sgn
-sgn.yaml
 config.yaml
 data/

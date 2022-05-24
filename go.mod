@@ -1,6 +1,6 @@
-module github.com/waite-lee/sgn
+module github.com/SeeDAO-OpenSource/sgn
 
-replace github.com/waite-lee/sgn => ./sgn
+replace github.com/SeeDAO-OpenSource/sgn => ./sgn
 
 go 1.17
 

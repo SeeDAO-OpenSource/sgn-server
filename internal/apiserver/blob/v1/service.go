@@ -1,6 +1,6 @@
 package blobv1
 
-import "github.com/waite-lee/sgn/pkg/blob"
+import "github.com/SeeDAO-OpenSource/sgn/pkg/blob"
 
 type BlobService struct {
 	store blob.BlobStore

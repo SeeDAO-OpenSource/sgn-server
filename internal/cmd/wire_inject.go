@@ -4,8 +4,8 @@
 package cmd
 
 import (
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/google/wire"
-	"github.com/waite-lee/sgn/pkg/app"
 )
 
 func BuildCommands(buider *app.AppBuilder) AppCommands {

@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
 	"github.com/nfnt/resize"
-	"github.com/waite-lee/sgn/pkg/blob"
 )
 
 type FileBlobStoreOptions struct {

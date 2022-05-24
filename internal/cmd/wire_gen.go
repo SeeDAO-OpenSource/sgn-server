@@ -7,8 +7,8 @@
 package cmd
 
 import (
-	"github.com/waite-lee/sgn/internal/common"
-	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/internal/common"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 )
 
 // Injectors from wire_inject.go:
