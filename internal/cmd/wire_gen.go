@@ -16,14 +16,14 @@ import (
 func BuildCommands(buider *app.AppBuilder) AppCommands {
 	testCmd := NewTestCmd()
 	apiServerCmd := NewApiServerCmd(buider)
-	nftPullCmd := NewNftPullCmd(buider)
+	sgnPullCmd := NewSgnPullCmd(buider)
 	configCmd := NewConfigCmd()
 	httpClientOptions := _wireHttpClientOptionsValue
 	updateCmd := NewUpdateCmd(httpClientOptions)
 	appCommands := AppCommands{
 		Test:      testCmd,
 		ApiServer: apiServerCmd,
-		NftPull:   nftPullCmd,
+		SgnPull:   sgnPullCmd,
 		Config:    configCmd,
 		Update:    updateCmd,
 	}
