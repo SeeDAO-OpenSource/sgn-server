@@ -1,6 +1,6 @@
 package main
 
-import "github.com/waite-lee/sgn/pkg/app"
+import "github.com/SeeDAO-OpenSource/sgn/pkg/app"
 
 var (
 	version string

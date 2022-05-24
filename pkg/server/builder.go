@@ -1,8 +1,8 @@
 package server
 
 import (
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/gin-gonic/gin"
-	"github.com/waite-lee/sgn/pkg/app"
 )
 
 type ServerBuiler struct {

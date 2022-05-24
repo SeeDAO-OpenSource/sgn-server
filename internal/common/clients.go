@@ -1,13 +1,13 @@
 package common
 
 import (
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/blob/file"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/db/mongodb"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/eth"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/ipfs"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 	"github.com/google/wire"
-	"github.com/waite-lee/sgn/pkg/app"
-	"github.com/waite-lee/sgn/pkg/blob/file"
-	"github.com/waite-lee/sgn/pkg/db/mongodb"
-	"github.com/waite-lee/sgn/pkg/eth"
-	"github.com/waite-lee/sgn/pkg/ipfs"
-	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 var CommonSet = wire.NewSet(

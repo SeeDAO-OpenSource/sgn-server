@@ -1,7 +1,7 @@
 package blobv1
 
 import (
-	"github.com/waite-lee/sgn/pkg/server"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 )
 
 func AddBlobV1(buider *server.ServerBuiler) error {

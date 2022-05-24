@@ -3,10 +3,10 @@ package cmd
 import (
 	"errors"
 
+	sgnv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn/v1"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	sgnv1 "github.com/waite-lee/sgn/internal/apiserver/sgn/v1"
-	"github.com/waite-lee/sgn/pkg/app"
 )
 
 type SgnPullCmd cobra.Command

@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 	"github.com/gin-gonic/gin"
-	"github.com/waite-lee/sgn/pkg/blob"
-	"github.com/waite-lee/sgn/pkg/mvc"
 )
 
 type BlobController struct {

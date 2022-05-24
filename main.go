@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/waite-lee/sgn/internal/cmd"
-	"github.com/waite-lee/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/internal/cmd"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 )
 
 func main() {

@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/db/mongodb"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/sgn/pkg/db/mongodb"
 )
 
 type TestCmd cobra.Command

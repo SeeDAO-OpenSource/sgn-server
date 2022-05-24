@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/waite-lee/sgn/internal/apiserver"
-	"github.com/waite-lee/sgn/pkg/app"
-	"github.com/waite-lee/sgn/pkg/server"
 )
 
 type ApiServerCmd cobra.Command
