@@ -5,29 +5,29 @@ window.onload = (h, e) => {
     init()
 }
 
-const baseURL = "{ServerURL}"
+const baseURL = "http://124.221.160.98:4200"
 
 const init = async () => {
-    const nftList = document.getElementById("ntfList");
-    chidren = [...nftList.childNodes]
-    chidren.forEach(n => nftList.removeChild(n))
-    const response = await fetch(`${baseURL}/api/v1/nft?page=${page}&page_size=${pageSize}`)
+    const sgnList = document.getElementById("ntfList");
+    chidren = [...sgnList.childNodes]
+    chidren.forEach(n => sgnList.removeChild(n))
+    const response = await fetch(`${baseURL}/api/v1/sgn?page=${page}&page_size=${pageSize}`)
     const data = await response.json()
     if (data.success && data.data) {
         data.data.forEach(ntf => {
-            nftList.appendChild(createNtfItem(ntf))
+            sgnList.appendChild(createNtfItem(ntf))
         });
     }
 }
 
 const createNtfItem = (data) => {
     const item = document.createElement('div')
-    item.className = 'nft-item'
+    item.className = 'sgn-item'
     const name = document.createElement('div')
-    name.className = 'nft-item-name'
+    name.className = 'sgn-item-name'
     name.innerText = data.token_id
     const img = document.createElement('img')
-    img.className = 'nft-item-img'
+    img.className = 'sgn-item-img'
     img.src = `${baseURL}/api/v1/blob/${encodeURIComponent(data.metadata.image)}?w=120&h=120`
     item.appendChild(name)
     item.appendChild(img)

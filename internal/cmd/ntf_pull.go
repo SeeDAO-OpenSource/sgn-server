@@ -5,17 +5,17 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	nftv1 "github.com/waite-lee/sgn/internal/apiserver/nft/v1"
+	sgnv1 "github.com/waite-lee/sgn/internal/apiserver/sgn/v1"
 	"github.com/waite-lee/sgn/pkg/app"
 )
 
-type NftPullCmd cobra.Command
+type SgnPullCmd cobra.Command
 
-func NewNftPullCmd(builder *app.AppBuilder) *NftPullCmd {
+func NewSgnPullCmd(builder *app.AppBuilder) *SgnPullCmd {
 	cmd := &cobra.Command{
 		Use:   "pull",
-		Short: "拉取nft信息",
-		Long:  "拉取nft信息",
+		Short: "拉取sgn信息",
+		Long:  "拉取sgn信息",
 		RunE:  func(cmd *cobra.Command, args []string) error { return runPull(cmd) },
 	}
 	cmd.PersistentFlags().StringP("address", "a", "", "合约地址")
@@ -24,7 +24,7 @@ func NewNftPullCmd(builder *app.AppBuilder) *NftPullCmd {
 	cmd.PersistentFlags().IntP("skip", "s", 0, "跳过数量")
 	viper.BindPFlag("Pull.Skip", cmd.PersistentFlags().Lookup("skip"))
 	cmd.PersistentFlags().StringArrayP("tokens", "t", []string{}, "token列表")
-	return (*NftPullCmd)(cmd)
+	return (*SgnPullCmd)(cmd)
 }
 
 func runPull(cmd *cobra.Command) error {
@@ -32,7 +32,7 @@ func runPull(cmd *cobra.Command) error {
 	if address == "" {
 		return errors.New("参数: address(合约地址)不能为空")
 	}
-	srv, err := nftv1.BuildNftServiceV1()
+	srv, err := sgnv1.BuildSgnServiceV1()
 	if err != nil {
 		return err
 	}

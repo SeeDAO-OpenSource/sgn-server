@@ -10,7 +10,7 @@ func AddBlobV1(buider *server.ServerBuiler) error {
 }
 
 func initRoute(s *server.Server) error {
-	nftCtl := newBlobController()
-	route(&nftCtl, s.G)
+	sgnCtl := newBlobController()
+	route(&sgnCtl, s.G)
 	return nil
 }

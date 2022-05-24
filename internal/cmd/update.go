@@ -27,7 +27,7 @@ type Release struct {
 
 const (
 	githubURL         = "https://api.github.com"
-	releasesLatestURL = "/repos/SeeDAO-OpenSource/nft-server/releases/latest"
+	releasesLatestURL = "/repos/SeeDAO-OpenSource/sgn-server/releases/latest"
 )
 
 func NewUpdateCmd(hoptions *mvc.HttpClientOptions) *UpdateCmd {
@@ -46,7 +46,7 @@ func update(cmd *cobra.Command, hoptions *mvc.HttpClientOptions, args []string) 
 	if currentVersion == "" {
 		return errors.New("未找到版本信息")
 	}
-	latest, _, err := client.Repositories.GetLatestRelease(context.TODO(), "SeeDAO-OpenSource", "nft-server")
+	latest, _, err := client.Repositories.GetLatestRelease(context.TODO(), "SeeDAO-OpenSource", "sgn-server")
 	if err != nil {
 		return err
 	}
@@ -55,7 +55,7 @@ func update(cmd *cobra.Command, hoptions *mvc.HttpClientOptions, args []string) 
 	if strings.Compare(currentVersion, latest.GetTagName()) < 0 {
 		for _, asset := range latest.Assets {
 			if strings.Contains(*asset.Name, "Linux") && strings.Contains(*asset.Name, "amd64") {
-				reader, _, err := client.Repositories.DownloadReleaseAsset(context.TODO(), "SeeDAO-OpenSource", "nft-server", *asset.ID, client.Client())
+				reader, _, err := client.Repositories.DownloadReleaseAsset(context.TODO(), "SeeDAO-OpenSource", "sgn-server", *asset.ID, client.Client())
 				if err != nil {
 					return err
 				}
