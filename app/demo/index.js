@@ -5,7 +5,7 @@ window.onload = (h, e) => {
     init()
 }
 
-const baseURL = "http://124.221.160.98:4200"
+const baseURL = "{ServerURL}"
 
 const init = async () => {
     const sgnList = document.getElementById("ntfList");
@@ -28,7 +28,7 @@ const createNtfItem = (data) => {
     name.innerText = data.token_id
     const img = document.createElement('img')
     img.className = 'sgn-item-img'
-    img.src = `${baseURL}/api/v1/blob/${encodeURIComponent(data.metadata.image)}?w=120&h=120`
+    img.src = `${baseURL}/api/v1/sgn/image/${data.token_id}?w=120&h=120`
     item.appendChild(name)
     item.appendChild(img)
     return item
