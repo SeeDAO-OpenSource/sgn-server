@@ -124,6 +124,7 @@ func (srv *SgnService) pullTokens(data []etherscan.ERC721Transfer, logging bool,
 		tokenId := v.TokenID
 		tokenInfo, err := srv.parseToken(contract, tokenId.Int(), logging)
 		tokenInfo.TimeStamp = v.TimeStamp.Time().UnixMilli()
+		tokenInfo.ID = v.Hash
 		if err != nil {
 			logPrintf(logging, "解析Token信息出错: %v\n", err.Error())
 			return err

@@ -15,12 +15,12 @@ const init = async () => {
     const data = await response.json()
     if (data.success && data.data) {
         data.data.forEach(ntf => {
-            sgnList.appendChild(createNtfItem(ntf))
+            sgnList.appendChild(createSgnItem(ntf))
         });
     }
 }
 
-const createNtfItem = (data) => {
+const createSgnItem = (data) => {
     const item = document.createElement('div')
     item.className = 'sgn-item'
     const name = document.createElement('div')
