@@ -2,6 +2,7 @@ package mvc
 
 import (
 	"encoding/json"
+	"errors"
 	"net"
 	"net/http"
 	"net/url"
@@ -72,6 +73,9 @@ func (c *RequestClient) Get(url string, retry bool) ([]byte, error) {
 	resp, err := request.Get(url)
 	if err != nil {
 		return []byte{}, err
+	}
+	if resp.StatusCode() >= 300 || resp.StatusCode() < 200 {
+		return []byte{}, errors.New(string(resp.Body()))
 	}
 	return resp.Body(), nil
 }

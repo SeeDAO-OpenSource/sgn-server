@@ -94,10 +94,12 @@ func (f *FileBlobStore) processFile(path string, process *blob.Process) ([]byte,
 		return nil, err
 	}
 	content, err := f.resizeImage(file, process)
-	if err != nil {
+	if err != nil || content == nil {
 		content, err = ioutil.ReadFile(path)
 	}
-	err = os.WriteFile(cachPath, content, 0644)
+	if cachPath != "" {
+		err = os.WriteFile(cachPath, content, 0644)
+	}
 	return content, err
 }
 
