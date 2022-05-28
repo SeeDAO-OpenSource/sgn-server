@@ -39,18 +39,36 @@ func (r *MongoDbSgnTokenRepo) InsertMany(data []*erc721.TokenInfo) error {
 func (r *MongoDbSgnTokenRepo) GetList(address string, page int, pageSize int) ([]erc721.TokenInfo, error) {
 	collection := r.tranfersCollection()
 	var data []erc721.TokenInfo
-	filter := bson.D{{Key: "contract", Value: address}}
-	findOptions := options.Find().SetSort(bson.D{{Key: "timestamp", Value: -1}}).SetLimit(int64(pageSize)).SetSkip(int64((page - 1) * pageSize))
-	result, err := collection.Find(context.TODO(), filter, findOptions)
-	result.All(context.TODO(), &data)
+	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: "contract", Value: address}}}}
+	sortStage := bson.D{{Key: "$sort", Value: bson.D{{Key: "timestamp", Value: -1}}}}
+	groupStage := bson.D{{Key: "$group", Value: bson.D{{Key: "_id", Value: "$token_id"}, {Key: "token", Value: bson.D{{Key: "$first", Value: "$$ROOT"}}}}}}
+	skipStage := bson.D{{Key: "$skip", Value: int64((page - 1) * pageSize)}}
+	limitStage := bson.D{{Key: "$limit", Value: int64(pageSize)}}
+	projectStage := bson.D{{Key: "$replaceRoot", Value: bson.D{{Key: "newRoot", Value: "$token"}}}}
+	pipeline := []bson.D{matchStage, sortStage, groupStage, skipStage, limitStage, projectStage}
+	cursor, err := collection.Aggregate(context.TODO(), pipeline)
+	if err != nil {
+		return nil, err
+	}
+	err = cursor.All(context.TODO(), &data)
 	return data, err
 }
 
 func (r *MongoDbSgnTokenRepo) Get(token int64, address string) (erc721.TokenInfo, error) {
 	collection := r.tranfersCollection()
-	tokenInfo := erc721.TokenInfo{}
-	err := collection.FindOne(context.TODO(), bson.D{{Key: "token_id", Value: token}, {Key: "contract", Value: address}}).Decode(&tokenInfo)
-	return tokenInfo, err
+	findOptions := options.Find().SetSort(bson.D{{Key: "timestamp", Value: -1}}).SetLimit(1)
+	curror, err := collection.Find(context.TODO(), bson.D{{Key: "token_id", Value: token}, {Key: "contract", Value: address}}, findOptions)
+	if err != nil {
+		return erc721.TokenInfo{}, err
+	}
+	tokens := []erc721.TokenInfo{}
+	if err := curror.All(context.TODO(), &tokens); err != nil {
+		return erc721.TokenInfo{}, err
+	}
+	if len(tokens) == 0 {
+		return erc721.TokenInfo{}, mongo.ErrNoDocuments
+	}
+	return tokens[0], err
 }
 
 func (r *MongoDbSgnTokenRepo) tranfersCollection() *mongo.Collection {
