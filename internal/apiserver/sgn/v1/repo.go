@@ -50,5 +50,5 @@ func (r *MongoErc721TransferLogRepo) GetAddresses() ([]string, error) {
 }
 
 func (r *MongoErc721TransferLogRepo) collection() *mongo.Collection {
-	return r.MongoClient.Database("sgn").Collection("transfer_log")
+	return r.MongoClient.Database(DatabaseName).Collection(LogCollectionName)
 }
