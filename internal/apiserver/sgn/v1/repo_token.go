@@ -44,7 +44,9 @@ func (r *MongoDbSgnTokenRepo) GetList(address string, page int, pageSize int) ([
 	groupStage := bson.D{{Key: "$group", Value: bson.D{{Key: "_id", Value: "$token_id"}, {Key: "token", Value: bson.D{{Key: "$first", Value: "$$ROOT"}}}}}}
 	skipStage := bson.D{{Key: "$skip", Value: int64((page - 1) * pageSize)}}
 	limitStage := bson.D{{Key: "$limit", Value: int64(pageSize)}}
+	// 将所有token属性变为token数组
 	projectStage := bson.D{{Key: "$replaceRoot", Value: bson.D{{Key: "newRoot", Value: "$token"}}}}
+	// 查询所有tokenId最新的交易信息
 	pipeline := []bson.D{matchStage, sortStage, groupStage, skipStage, limitStage, projectStage}
 	cursor, err := collection.Aggregate(context.TODO(), pipeline)
 	if err != nil {
@@ -72,6 +74,5 @@ func (r *MongoDbSgnTokenRepo) Get(token int64, address string) (erc721.TokenInfo
 }
 
 func (r *MongoDbSgnTokenRepo) tranfersCollection() *mongo.Collection {
-	return r.MongoClient.Database("sgn").Collection("token_seedao")
-
+	return r.MongoClient.Database(DatabaseName).Collection(TokenCollectionName)
 }
