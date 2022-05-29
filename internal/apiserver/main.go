@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	blobv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/blob/v1"
+	idv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/identity/v1"
 	sgnv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn/v1"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 )
@@ -12,6 +13,7 @@ import (
 func AddApiServer(builder *server.ServerBuiler) {
 	sgnv1.AddSgnV1(builder)
 	blobv1.AddBlobV1(builder)
+	idv1.AddIdentityV1(builder)
 	builder.Configure(func(s *server.Server) error {
 		relaceDemoAddress(s.Options)
 		return nil
