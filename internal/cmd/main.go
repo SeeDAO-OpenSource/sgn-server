@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	idcmd "github.com/SeeDAO-OpenSource/sgn/internal/cmd/identity"
 	"github.com/SeeDAO-OpenSource/sgn/internal/common"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/google/wire"
@@ -33,4 +34,6 @@ func AddCommands(ac *app.AppBuilder) {
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.SgnPull))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Config))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Update))
+	ac.CmdBuilder.AddCommand(idcmd.NewIdentityCmd(ac))
+
 }
