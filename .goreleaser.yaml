@@ -1,5 +1,6 @@
 # This is an example .goreleaser.yml file with some sensible defaults.
 # Make sure to check the documentation at https://goreleaser.com
+project_name: sgn
 before:
   hooks:
     # You may remove this if you don't use go modules.
@@ -43,3 +44,20 @@ changelog:
       - '^docs:'
       - '^test:'
       - "^other:"
+
+dockers:
+  -
+    id: sgnserver
+    ids:
+    - seedao
+    - sgn
+    image_templates:
+    - "waitelee/sgnserver:{{ .Tag }}"
+    - "waitelee/sgnserver:v{{ .Major }}.{{ .Minor }}"
+    - "waitelee/sgnserver:latest"
+    use: docker
+    goarch: amd64
+    goos: linux
+    dockerfile: Dockerfile.goreleaser
+    extra_files:
+    - app

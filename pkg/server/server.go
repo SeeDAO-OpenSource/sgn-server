@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -24,8 +25,10 @@ func NewServer(g *gin.Engine, options *ServerOptions) *Server {
 }
 
 func (s Server) Run() error {
+	addr := ":" + strconv.Itoa(s.Options.Port)
 	if s.Options.Port == 0 {
-		return s.G.Run(":4100")
+		addr = ":4100"
 	}
-	return s.G.Run(":" + strconv.Itoa(s.Options.Port))
+	log.Printf("**********GIN Listening: %s ***********\n", addr)
+	return s.G.Run(addr)
 }
