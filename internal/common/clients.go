@@ -32,7 +32,7 @@ var MongoOptions = &mongodb.MongoOptions{
 }
 
 var FileOptions = &file.FileBlobStoreOptions{
-	BasePath: "data",
+	BasePath: "/data",
 }
 
 var EthOptions = eth.NewEthOptions()
