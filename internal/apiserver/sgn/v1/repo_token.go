@@ -40,14 +40,14 @@ func (r *MongoDbSgnTokenRepo) GetList(address string, page int, pageSize int) ([
 	collection := r.tranfersCollection()
 	var data []erc721.TokenInfo
 	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: "contract", Value: address}}}}
-	sortStage := bson.D{{Key: "$sort", Value: bson.D{{Key: "timestamp", Value: -1}}}}
 	groupStage := bson.D{{Key: "$group", Value: bson.D{{Key: "_id", Value: "$token_id"}, {Key: "token", Value: bson.D{{Key: "$first", Value: "$$ROOT"}}}}}}
-	skipStage := bson.D{{Key: "$skip", Value: int64((page - 1) * pageSize)}}
-	limitStage := bson.D{{Key: "$limit", Value: int64(pageSize)}}
 	// 将所有token属性变为token数组
 	projectStage := bson.D{{Key: "$replaceRoot", Value: bson.D{{Key: "newRoot", Value: "$token"}}}}
+	sortStage := bson.D{{Key: "$sort", Value: bson.D{{Key: "timestamp", Value: -1}}}}
+	skipStage := bson.D{{Key: "$skip", Value: int64((page - 1) * pageSize)}}
+	limitStage := bson.D{{Key: "$limit", Value: int64(pageSize)}}
 	// 查询所有tokenId最新的交易信息
-	pipeline := []bson.D{matchStage, sortStage, groupStage, skipStage, limitStage, projectStage}
+	pipeline := []bson.D{matchStage, groupStage, projectStage, sortStage, skipStage, limitStage}
 	cursor, err := collection.Aggregate(context.TODO(), pipeline)
 	if err != nil {
 		return nil, err

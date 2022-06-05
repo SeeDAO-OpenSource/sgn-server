@@ -3,6 +3,7 @@ package mvc
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -48,6 +49,7 @@ func NewHttpClient(hoptions *HttpClientOptions) *http.Client {
 	if hoptions.ProxyURL != "" {
 		proxyUrl, _ := url.Parse(hoptions.ProxyURL)
 		transport.Proxy = http.ProxyURL(proxyUrl)
+		log.Println("使用代理: " + hoptions.ProxyURL)
 	}
 	httpClient.Transport = transport
 	return httpClient
