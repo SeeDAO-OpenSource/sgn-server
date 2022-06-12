@@ -17,6 +17,11 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18
+    
+    - name: go-swag
+      uses: yegorrybchenko/go-swag-action@v0.1
+      with:
+        command: init
 
     - name: Build
       run: go build -v ./...
