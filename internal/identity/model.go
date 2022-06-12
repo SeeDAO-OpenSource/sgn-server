@@ -5,6 +5,8 @@ type MemberMetadata struct {
 	Value string `json:"value" bson:"value"`
 }
 
+// Member model info
+// @Description User account information
 type Member struct {
 	// 钱包地址
 	Address string `json:"address" bson:"address"`

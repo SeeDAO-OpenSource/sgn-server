@@ -16,6 +16,15 @@ func newIdentityController() IdentityController {
 	return IdentityController{}
 }
 
+// @Summary Get all members
+// @Description Get all members
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1 [get]
+// @param page query string false "page"
+// @param size query string false "size"
 func (c IdentityController) GetList(ctx *gin.Context) {
 	srv, err := identity.NewIdentityService()
 	if err != nil {
@@ -31,6 +40,14 @@ func (c IdentityController) GetList(ctx *gin.Context) {
 	mvc.Ok(ctx, data)
 }
 
+// @Summary Get member by address
+// @Description Get member by address
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1/{address} [get]
+// @param address path string true "address"
 func (c IdentityController) GetByAddress(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
@@ -50,6 +67,14 @@ func (c IdentityController) GetByAddress(ctx *gin.Context) {
 	mvc.Ok(ctx, member)
 }
 
+// @Summary Get members by addresses
+// @Description Get members by addresses
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1/range/{addresses} [get]
+// @param addresses path string true "addresses"
 func (c IdentityController) GetByAddresses(ctx *gin.Context) {
 	param := ctx.Param("addresses")
 	if len(param) == 0 {
@@ -70,6 +95,14 @@ func (c IdentityController) GetByAddresses(ctx *gin.Context) {
 	mvc.Ok(ctx, members)
 }
 
+// @Summary Insert member
+// @Description Insert member
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1 [post]
+// @param member body identity.Member true "member"
 func (c IdentityController) Insert(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
@@ -95,6 +128,15 @@ func (c IdentityController) Insert(ctx *gin.Context) {
 	}
 }
 
+// @Summary Update member
+// @Description Update member
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1/{address} [put]
+// @param address path string true "address"
+// @param member body identity.Member true "member"
 func (c IdentityController) Update(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
@@ -120,6 +162,14 @@ func (c IdentityController) Update(ctx *gin.Context) {
 	}
 }
 
+// @Summary Delete member
+// @Description Delete member
+// @Tags Identity
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} mvc.DataResult
+// @Router /identity/v1/{address} [delete]
+// @param address path string true "address"
 func (c IdentityController) Delete(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
