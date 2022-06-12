@@ -5,7 +5,7 @@ window.onload = (h, e) => {
     init()
 }
 
-const baseURL = "{ServerURL}"
+const baseURL = "http://124.221.160.98:4200"
 
 const init = async () => {
     const sgnList = document.getElementById("ntfList");

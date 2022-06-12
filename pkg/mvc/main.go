@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary
+// @Description 返回结果
 type DataResult struct {
 	Status  int         `json:"status"`
 	Message string      `json:"message"`

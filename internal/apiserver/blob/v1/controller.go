@@ -17,6 +17,14 @@ func newBlobController() BlobController {
 	return BlobController{}
 }
 
+// @Summary Get blob data
+// @Schemes
+// @Description
+// @Tags example
+// @Produce octet-stream
+// @Success 200
+// @Router /api/v1/blob/{key} [get]
+// @Param key path string true "key"
 func (c *BlobController) Get(ctx *gin.Context) {
 	key := ctx.Param("key")
 	if key == "" {

@@ -17,6 +17,16 @@ func newSgnController() SgnController {
 	return SgnController{}
 }
 
+// @Summary 获取sgn信息列表
+// @Schemes
+// @Description 按照交易时间进行降序排序
+// @Tags sgn
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /api/v1/sgn [get]
+// @Param page query int false "页码"
+// @Param pageSize query int false "每页数量"
 func (c *SgnController) GetOwners(ctx *gin.Context) {
 	page, pageSize := mvc.PageQuery(ctx)
 	srv, err := BuildSgnServiceV1()
