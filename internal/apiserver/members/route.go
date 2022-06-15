@@ -1,4 +1,4 @@
-package idv1
+package memebersv1
 
 import "github.com/gin-gonic/gin"
 

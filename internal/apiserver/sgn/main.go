@@ -10,7 +10,7 @@ var EsOptions = &erc721.EtherScanOptions{
 	BaseURL: "https://api.etherscan.io/api?",
 }
 
-func AddSgnV1(builder *server.ServerBuiler) error {
+func AddSgn(builder *server.ServerBuiler) error {
 	builder.Configure(func(s *server.Server) error {
 		return initRoute(s.G)
 	})

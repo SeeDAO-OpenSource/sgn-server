@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 
-	sgnv1 "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn/v1"
+	sgn "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -32,7 +32,7 @@ func runPull(cmd *cobra.Command) error {
 	if address == "" {
 		return errors.New("参数: address(合约地址)不能为空")
 	}
-	srv, err := sgnv1.BuildSgnServiceV1()
+	srv, err := sgn.BuildSgnServiceV1()
 	if err != nil {
 		return err
 	}

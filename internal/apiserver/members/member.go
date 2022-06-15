@@ -1,11 +1,11 @@
-package idv1
+package memebersv1
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 	"github.com/gin-gonic/gin"
 )
 
-func AddIdentityV1(builder *server.ServerBuiler) error {
+func AddIdentity(builder *server.ServerBuiler) error {
 	builder.Configure(func(s *server.Server) error {
 		return initRoute(s.G)
 	})

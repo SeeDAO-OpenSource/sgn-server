@@ -4,7 +4,7 @@ import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 )
 
-func AddBlobV1(buider *server.ServerBuiler) error {
+func AddBlob(buider *server.ServerBuiler) error {
 	buider.Configure(initRoute)
 	return nil
 }
