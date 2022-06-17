@@ -8,10 +8,10 @@ window.onload = (h, e) => {
 const baseURL = "http://124.221.160.98:4200"
 
 const init = async () => {
-    const sgnList = document.getElementById("ntfList");
+    const sgnList = document.getElementById("sgnList");
     chidren = [...sgnList.childNodes]
     chidren.forEach(n => sgnList.removeChild(n))
-    const response = await fetch(`${baseURL}/api/v1/sgn?page=${page}&page_size=${pageSize}`)
+    const response = await fetch(`${baseURL}/api/sgn?page=${page}&page_size=${pageSize}`)
     const data = await response.json()
     if (data.success && data.data) {
         data.data.forEach(ntf => {
@@ -28,7 +28,7 @@ const createSgnItem = (data) => {
     name.innerText = data.token_id
     const img = document.createElement('img')
     img.className = 'sgn-item-img'
-    img.src = `${baseURL}/api/v1/sgn/image/${data.token_id}?w=120&h=120`
+    img.src = `${baseURL}/api/sgn/image/${data.token_id}?w=120&h=120`
     item.appendChild(name)
     item.appendChild(img)
     return item

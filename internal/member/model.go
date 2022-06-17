@@ -1,4 +1,4 @@
-package identity
+package member
 
 type MemberMetadata struct {
 	Key   string `json:"key" bson:"key"`
