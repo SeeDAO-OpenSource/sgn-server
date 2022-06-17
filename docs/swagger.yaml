@@ -1,5 +1,5 @@
 definitions:
-  identity.Member:
+  member.Member:
     description: User account information
     properties:
       address:
@@ -28,7 +28,7 @@ definitions:
       metadata:
         description: 其他信息
         items:
-          $ref: '#/definitions/identity.MemberMetadata'
+          $ref: '#/definitions/member.MemberMetadata'
         type: array
       nickname:
         description: 昵称
@@ -41,7 +41,7 @@ definitions:
       updated_at:
         type: integer
     type: object
-  identity.MemberMetadata:
+  member.MemberMetadata:
     properties:
       key:
         type: string
@@ -123,28 +123,7 @@ paths:
             $ref: '#/definitions/mvc.DataResult'
       summary: Get all members
       tags:
-      - Identity
-    post:
-      consumes:
-      - application/json
-      description: Insert member
-      parameters:
-      - description: member
-        in: body
-        name: member
-        required: true
-        schema:
-          $ref: '#/definitions/identity.Member'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/mvc.DataResult'
-      summary: Insert member
-      tags:
-      - Identity
+      - Member
   /identity/v1/{address}:
     delete:
       consumes:
@@ -165,7 +144,56 @@ paths:
             $ref: '#/definitions/mvc.DataResult'
       summary: Delete member
       tags:
-      - Identity
+      - Member
+    put:
+      consumes:
+      - application/json
+      description: Update member
+      parameters:
+      - description: address
+        in: path
+        name: address
+        required: true
+        type: string
+      - description: member
+        in: body
+        name: member
+        required: true
+        schema:
+          $ref: '#/definitions/member.Member'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mvc.DataResult'
+      summary: Update member
+      tags:
+      - Member
+  /member/v1:
+    post:
+      consumes:
+      - application/json
+      description: Insert member
+      parameters:
+      - description: member
+        in: body
+        name: member
+        required: true
+        schema:
+          $ref: '#/definitions/member.Member'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mvc.DataResult'
+      summary: Insert member
+      tags:
+      - Member
+  /member/v1/{address}:
     get:
       consumes:
       - application/json
@@ -185,34 +213,8 @@ paths:
             $ref: '#/definitions/mvc.DataResult'
       summary: Get member by address
       tags:
-      - Identity
-    put:
-      consumes:
-      - application/json
-      description: Update member
-      parameters:
-      - description: address
-        in: path
-        name: address
-        required: true
-        type: string
-      - description: member
-        in: body
-        name: member
-        required: true
-        schema:
-          $ref: '#/definitions/identity.Member'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/mvc.DataResult'
-      summary: Update member
-      tags:
-      - Identity
-  /identity/v1/range/{addresses}:
+      - Member
+  /member/v1/range/{addresses}:
     get:
       consumes:
       - application/json
@@ -232,5 +234,5 @@ paths:
             $ref: '#/definitions/mvc.DataResult'
       summary: Get members by addresses
       tags:
-      - Identity
+      - Member
 swagger: "2.0"

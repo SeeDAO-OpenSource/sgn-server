@@ -1,4 +1,4 @@
-package sgnv1
+package sgn
 
 import (
 	"log"

@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package blobv1
+package blob
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/internal/common"

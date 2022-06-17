@@ -1,32 +1,32 @@
-package memebersv1
+package memberapi
 
 import (
 	"net/http"
 	"strings"
 
-	"github.com/SeeDAO-OpenSource/sgn/internal/identity"
+	"github.com/SeeDAO-OpenSource/sgn/internal/member"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 	"github.com/gin-gonic/gin"
 )
 
-type IdentityController struct {
+type MemberController struct {
 }
 
-func newIdentityController() IdentityController {
-	return IdentityController{}
+func NewMemberController() MemberController {
+	return MemberController{}
 }
 
 // @Summary Get all members
 // @Description Get all members
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1 [get]
+// @Router /members [get]
 // @param page query string false "page"
 // @param size query string false "size"
-func (c IdentityController) GetList(ctx *gin.Context) {
-	srv, err := identity.NewIdentityService()
+func (c MemberController) GetList(ctx *gin.Context) {
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
@@ -42,19 +42,19 @@ func (c IdentityController) GetList(ctx *gin.Context) {
 
 // @Summary Get member by address
 // @Description Get member by address
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1/{address} [get]
+// @Router /members/{address} [get]
 // @param address path string true "address"
-func (c IdentityController) GetByAddress(ctx *gin.Context) {
+func (c MemberController) GetByAddress(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv, err := identity.NewIdentityService()
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
@@ -69,19 +69,19 @@ func (c IdentityController) GetByAddress(ctx *gin.Context) {
 
 // @Summary Get members by addresses
 // @Description Get members by addresses
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1/range/{addresses} [get]
+// @Router /members/range/{addresses} [get]
 // @param addresses path string true "addresses"
-func (c IdentityController) GetByAddresses(ctx *gin.Context) {
+func (c MemberController) GetByAddresses(ctx *gin.Context) {
 	param := ctx.Param("addresses")
 	if len(param) == 0 {
 		mvc.Fail(ctx, http.StatusBadRequest, "addresses is empty")
 		return
 	}
-	srv, err := identity.NewIdentityService()
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
@@ -97,30 +97,30 @@ func (c IdentityController) GetByAddresses(ctx *gin.Context) {
 
 // @Summary Insert member
 // @Description Insert member
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1 [post]
-// @param member body identity.Member true "member"
-func (c IdentityController) Insert(ctx *gin.Context) {
+// @Router /members [post]
+// @param member body member.Member true "member"
+func (c MemberController) Insert(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	member := identity.Member{}
-	err := ctx.BindJSON(&member)
+	model := member.Member{}
+	err := ctx.BindJSON(&model)
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv, err := identity.NewIdentityService()
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	err = srv.Insert(&member)
+	err = srv.Insert(&model)
 	if err != nil {
 		mvc.Error(ctx, err)
 	} else {
@@ -130,31 +130,31 @@ func (c IdentityController) Insert(ctx *gin.Context) {
 
 // @Summary Update member
 // @Description Update member
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1/{address} [put]
+// @Router /members/{address} [put]
 // @param address path string true "address"
-// @param member body identity.Member true "member"
-func (c IdentityController) Update(ctx *gin.Context) {
+// @param member body member.Member true "member"
+func (c MemberController) Update(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	member := identity.Member{}
-	err := ctx.BindJSON(&member)
+	model := member.Member{}
+	err := ctx.BindJSON(&model)
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv, err := identity.NewIdentityService()
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return
 	}
-	err = srv.Update(&member)
+	err = srv.Update(&model)
 	if err != nil {
 		mvc.Error(ctx, err)
 	} else {
@@ -164,19 +164,19 @@ func (c IdentityController) Update(ctx *gin.Context) {
 
 // @Summary Delete member
 // @Description Delete member
-// @Tags Identity
+// @Tags Member
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} mvc.DataResult
-// @Router /identity/v1/{address} [delete]
+// @Router /members/{address} [delete]
 // @param address path string true "address"
-func (c IdentityController) Delete(ctx *gin.Context) {
+func (c MemberController) Delete(ctx *gin.Context) {
 	address := ctx.Param("address")
 	if address == "" {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv, err := identity.NewIdentityService()
+	srv, err := member.NewMemberService()
 	if err != nil {
 		mvc.Error(ctx, err)
 		return

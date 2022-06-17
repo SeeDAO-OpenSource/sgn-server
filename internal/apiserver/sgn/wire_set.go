@@ -1,4 +1,4 @@
-package sgnv1
+package sgn
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/pkg/erc721"
@@ -7,7 +7,7 @@ import (
 	"github.com/google/wire"
 )
 
-var SgnV1Set = wire.NewSet(
+var sgnSet = wire.NewSet(
 	common.CommonSet,
 	erc721.NewErc721Service,
 	erc721.GetClient,

@@ -1,4 +1,4 @@
-package blobv1
+package blob
 
 import (
 	"errors"
@@ -23,7 +23,7 @@ func newBlobController() BlobController {
 // @Tags example
 // @Produce octet-stream
 // @Success 200
-// @Router /api/v1/blob/{key} [get]
+// @Router /api/blob/{key} [get]
 // @Param key path string true "key"
 func (c *BlobController) Get(ctx *gin.Context) {
 	key := ctx.Param("key")

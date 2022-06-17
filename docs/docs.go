@@ -85,7 +85,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Identity"
+                    "Member"
                 ],
                 "summary": "Get all members",
                 "parameters": [
@@ -110,103 +110,9 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Insert member",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Identity"
-                ],
-                "summary": "Insert member",
-                "parameters": [
-                    {
-                        "description": "member",
-                        "name": "member",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/identity.Member"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/identity/v1/range/{addresses}": {
-            "get": {
-                "description": "Get members by addresses",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Identity"
-                ],
-                "summary": "Get members by addresses",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "addresses",
-                        "name": "addresses",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
             }
         },
         "/identity/v1/{address}": {
-            "get": {
-                "description": "Get member by address",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Identity"
-                ],
-                "summary": "Get member by address",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "address",
-                        "name": "address",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
-            },
             "put": {
                 "description": "Update member",
                 "consumes": [
@@ -216,7 +122,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Identity"
+                    "Member"
                 ],
                 "summary": "Update member",
                 "parameters": [
@@ -233,7 +139,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/identity.Member"
+                            "$ref": "#/definitions/member.Member"
                         }
                     }
                 ],
@@ -255,9 +161,107 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Identity"
+                    "Member"
                 ],
                 "summary": "Delete member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/member/v1": {
+            "post": {
+                "description": "Insert member",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Insert member",
+                "parameters": [
+                    {
+                        "description": "member",
+                        "name": "member",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/member.Member"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/member/v1/range/{addresses}": {
+            "get": {
+                "description": "Get members by addresses",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Get members by addresses",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "addresses",
+                        "name": "addresses",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/member/v1/{address}": {
+            "get": {
+                "description": "Get member by address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Get member by address",
                 "parameters": [
                     {
                         "type": "string",
@@ -279,7 +283,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "identity.Member": {
+        "member.Member": {
             "description": "User account information",
             "type": "object",
             "properties": {
@@ -319,7 +323,7 @@ const docTemplate = `{
                     "description": "其他信息",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/identity.MemberMetadata"
+                        "$ref": "#/definitions/member.MemberMetadata"
                     }
                 },
                 "nickname": {
@@ -338,7 +342,7 @@ const docTemplate = `{
                 }
             }
         },
-        "identity.MemberMetadata": {
+        "member.MemberMetadata": {
             "type": "object",
             "properties": {
                 "key": {

@@ -1,7 +1,7 @@
 //go:build wireinject
 // +build wireinject
 
-package blobv1
+package blob
 
 import (
 	"github.com/google/wire"
@@ -9,7 +9,7 @@ import (
 
 func BuildBlobServiceV1() *BlobService {
 	wire.Build(
-		BlobV1Set,
+		blobSet,
 	)
 	return &BlobService{}
 }

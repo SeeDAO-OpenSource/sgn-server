@@ -8,7 +8,7 @@ import (
 )
 
 func AddSwagger(builder *server.ServerBuiler) error {
-	docs.SwaggerInfo.BasePath = "/api/v1"
+	docs.SwaggerInfo.BasePath = "/api"
 	builder.Configure(func(s *server.Server) error {
 		s.G.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 		return nil

@@ -1,11 +1,11 @@
-package sgnv1
+package sgn
 
 import (
 	"github.com/gin-gonic/gin"
 )
 
 func route(sgnctl *SgnController, g *gin.Engine) {
-	sgnGroup := g.Group("/api/v1")
+	sgnGroup := g.Group("/api")
 	{
 		v1 := sgnGroup.Group("sgn")
 		{

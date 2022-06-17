@@ -1,4 +1,4 @@
-package sgnv1
+package sgn
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/pkg/erc721"

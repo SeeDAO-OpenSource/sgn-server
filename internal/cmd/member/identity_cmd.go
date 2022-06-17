@@ -1,11 +1,11 @@
-package idcmd
+package membercmd
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"strings"
 
-	"github.com/SeeDAO-OpenSource/sgn/internal/identity"
+	"github.com/SeeDAO-OpenSource/sgn/internal/member"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
 	"github.com/spf13/cobra"
 )
@@ -56,11 +56,11 @@ func importData(cmd *cobra.Command) error {
 	if err := json.Unmarshal(content, &data); err != nil {
 		return err
 	}
-	members := make([]identity.Member, len(data))
+	members := make([]member.Member, len(data))
 	for i, item := range data {
 		members[i] = toMember(item)
 	}
-	service, err := identity.NewIdentityService()
+	service, err := member.NewMemberService()
 	if err != nil {
 		return err
 	}
@@ -70,8 +70,8 @@ func importData(cmd *cobra.Command) error {
 	return nil
 }
 
-func toMember(item dataType) identity.Member {
-	m := identity.Member{
+func toMember(item dataType) member.Member {
+	m := member.Member{
 		Address:     item.Address,
 		Discord:     item.DiscordName,
 		Description: item.Description,

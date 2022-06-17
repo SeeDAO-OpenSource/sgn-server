@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	blob "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/blob"
-	memebers "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/members"
+	memberapi "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/member"
 	sgn "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn"
 	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/swagger"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
@@ -14,7 +14,7 @@ import (
 func AddApiServer(builder *server.ServerBuiler) {
 	sgn.AddSgn(builder)
 	blob.AddBlob(builder)
-	memebers.AddIdentity(builder)
+	memberapi.AddMember(builder)
 	swagger.AddSwagger(builder)
 	builder.Configure(func(s *server.Server) error {
 		relaceDemoAddress(s.Options)

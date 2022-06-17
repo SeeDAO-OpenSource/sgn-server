@@ -1,7 +1,7 @@
 //go:build wireinject
 // +build wireinject
 
-package sgnv1
+package sgn
 
 import (
 	"github.com/google/wire"
@@ -9,7 +9,7 @@ import (
 
 func BuildSgnServiceV1() (*SgnService, error) {
 	wire.Build(
-		SgnV1Set,
+		sgnSet,
 	)
 	return &SgnService{}, nil
 }

@@ -1,11 +1,11 @@
-package memebersv1
+package memberapi
 
 import "github.com/gin-gonic/gin"
 
-func route(ctl *IdentityController, g *gin.Engine) {
-	sgnGroup := g.Group("/api/v1")
+func route(ctl *MemberController, g *gin.Engine) {
+	sgnGroup := g.Group("/api")
 	{
-		v1 := sgnGroup.Group("identity")
+		v1 := sgnGroup.Group("members")
 		{
 			v1.GET("", ctl.GetList)
 			v1.POST("", ctl.Insert)
