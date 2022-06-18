@@ -2,7 +2,6 @@ package app
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
-	"github.com/spf13/viper"
 )
 
 type AppBuilder struct {
@@ -50,8 +49,7 @@ func (a *AppBuilder) PostRun(action PostRunFunc) {
 
 func (a *AppBuilder) BindOptions(key string, options interface{}) {
 	a.PreRun(func() error {
-		utils.BindKey(key, options)
-		viper.UnmarshalKey(key, options)
+		utils.ViperBind(key, options)
 		return nil
 	})
 }

@@ -1,22 +1,21 @@
 
-var page = 1
-var pageSize = 20
+var count = 0
+var limit = 20
 window.onload = (h, e) => {
-    init()
+    load()
 }
 
-const baseURL = "http://124.221.160.98:4200"
+const baseURL = ""
 
-const init = async () => {
+const load = async () => {
     const sgnList = document.getElementById("sgnList");
-    chidren = [...sgnList.childNodes]
-    chidren.forEach(n => sgnList.removeChild(n))
-    const response = await fetch(`${baseURL}/api/sgn?page=${page}&page_size=${pageSize}`)
+    const response = await fetch(`${baseURL}/api/sgn?skip=${count}&limit=${limit}`)
     const data = await response.json()
     if (data.success && data.data) {
         data.data.forEach(ntf => {
             sgnList.appendChild(createSgnItem(ntf))
         });
+        count += data.data.length
     }
 }
 
@@ -34,29 +33,20 @@ const createSgnItem = (data) => {
     return item
 }
 
-const prePage = async () => {
-    page--
-    if (page < 1) {
-        page = 1
-    }
-    await init()
+const loadMore = async () => {
+    await load()
 }
 
-const nextPage = async () => {
-    page++
-    await init()
-}
-
-const setPageSize = async (size) => {
-    if (pageSize != size) {
-        pageSize = size
-        await init();
+const setLoadLimit = async (size) => {
+    if (limit != size) {
+        limit = size
+        await load();
     }
 }
 
 const submitPageSize = async () => {
     const size = document.getElementById("pagesizeInput").value
     if (size) {
-        await setPageSize(size)
+        await setLoadLimit(size)
     }
 }
