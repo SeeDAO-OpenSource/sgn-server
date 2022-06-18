@@ -7,6 +7,7 @@ import (
 
 	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,9 +30,9 @@ func newSgnController() SgnController {
 // @Param pageSize query int false "每页数量"
 func (c *SgnController) GetOwners(ctx *gin.Context) {
 	page, pageSize := mvc.PageQuery(ctx)
-	srv, err := BuildSgnServiceV1()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[SgnService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("sgn service is nil"))
 		return
 	}
 	data, err := srv.GetOwners("0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", page, pageSize)
@@ -49,7 +50,11 @@ func (c *SgnController) GetImage(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	service, err := BuildSgnServiceV1()
+	service := services.Get[SgnService]()
+	if service == nil {
+		mvc.Error(ctx, errors.New("sgn service is nil"))
+		return
+	}
 	reader, err := service.GetTokenImage(token, "0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", parseProcess(ctx))
 	if err != nil {
 		mvc.Error(ctx, err)

@@ -1,11 +1,13 @@
 package memberapi
 
 import (
+	"errors"
 	"net/http"
 	"strings"
 
 	"github.com/SeeDAO-OpenSource/sgn/internal/member"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,9 +28,9 @@ func NewMemberController() MemberController {
 // @param page query string false "page"
 // @param size query string false "size"
 func (c MemberController) GetList(ctx *gin.Context) {
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	pageIndex, pageSize := mvc.PageQuery(ctx)
@@ -54,9 +56,9 @@ func (c MemberController) GetByAddress(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	member, err := srv.GetByAddress(address)
@@ -81,9 +83,9 @@ func (c MemberController) GetByAddresses(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "addresses is empty")
 		return
 	}
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	addresses := strings.Split(param, ",")
@@ -115,9 +117,9 @@ func (c MemberController) Insert(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	err = srv.Insert(&model)
@@ -149,9 +151,9 @@ func (c MemberController) Update(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	err = srv.Update(&model)
@@ -176,9 +178,9 @@ func (c MemberController) Delete(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv, err := member.NewMemberService()
-	if err != nil {
-		mvc.Error(ctx, err)
+	srv := services.Get[member.MemberService]()
+	if srv == nil {
+		mvc.Error(ctx, errors.New("member service is nil"))
 		return
 	}
 	if err := srv.Delete(address); err != nil {

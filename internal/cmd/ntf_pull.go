@@ -5,6 +5,7 @@ import (
 
 	sgn "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -32,9 +33,9 @@ func runPull(cmd *cobra.Command) error {
 	if address == "" {
 		return errors.New("参数: address(合约地址)不能为空")
 	}
-	srv, err := sgn.BuildSgnServiceV1()
-	if err != nil {
-		return err
+	srv := services.Get[sgn.SgnService]()
+	if srv == nil {
+		return errors.New("服务: sgn(sgn服务)不能为空")
 	}
 	skip := viper.GetInt("Pull.Skip")
 

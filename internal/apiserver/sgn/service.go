@@ -21,10 +21,6 @@ type SgnService struct {
 	TokenRepo  SgnTokenRepo
 }
 
-func NewSgnService() *SgnService {
-	return &SgnService{}
-}
-
 func (srv *SgnService) GetOwners(address string, page int, pageSize int) ([]erc721.TokenInfo, error) {
 	return srv.TokenRepo.GetList(address, page, pageSize)
 }

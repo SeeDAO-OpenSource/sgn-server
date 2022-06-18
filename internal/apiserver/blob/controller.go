@@ -7,6 +7,7 @@ import (
 
 	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func newBlobController() BlobController {
 // @Summary Get blob data
 // @Schemes
 // @Description
-// @Tags example
+// @Tags Blob
 // @Produce octet-stream
 // @Success 200
 // @Router /api/blob/{key} [get]
@@ -32,7 +33,11 @@ func (c *BlobController) Get(ctx *gin.Context) {
 		return
 	}
 	key = strings.TrimLeft(key, "/")
-	service := BuildBlobServiceV1()
+	service := services.Get[BlobService]()
+	if service == nil {
+		mvc.Error(ctx, errors.New("blob service is nil"))
+		return
+	}
 	reader, err := service.Get(key, parseProcess(ctx))
 	if err != nil {
 		mvc.Error(ctx, err)

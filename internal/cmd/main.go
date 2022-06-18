@@ -2,20 +2,8 @@ package cmd
 
 import (
 	membercmd "github.com/SeeDAO-OpenSource/sgn/internal/cmd/member"
-	"github.com/SeeDAO-OpenSource/sgn/internal/common"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
-	"github.com/google/wire"
 	"github.com/spf13/cobra"
-)
-
-var CmdSet = wire.NewSet(
-	wire.Struct(new(AppCommands), "*"),
-	NewTestCmd,
-	NewApiServerCmd,
-	NewSgnPullCmd,
-	NewConfigCmd,
-	NewUpdateCmd,
-	common.CommonSet,
 )
 
 type AppCommands struct {
@@ -27,13 +15,11 @@ type AppCommands struct {
 }
 
 func AddCommands(ac *app.AppBuilder) {
-	common.AddCommonOptions(ac)
-	cmds := BuildCommands(ac)
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Test))
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.ApiServer))
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.SgnPull))
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Config))
-	ac.CmdBuilder.AddCommand((*cobra.Command)(cmds.Update))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(NewTestCmd()))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(NewApiServerCmd(ac)))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(NewSgnPullCmd(ac)))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(NewConfigCmd()))
+	ac.CmdBuilder.AddCommand((*cobra.Command)(NewUpdateCmd()))
 	ac.CmdBuilder.AddCommand(membercmd.NewIdentityCmd(ac))
 
 }

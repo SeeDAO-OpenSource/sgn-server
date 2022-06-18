@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 	"github.com/google/go-github/v43/github"
 	"github.com/spf13/cobra"
@@ -30,17 +31,21 @@ const (
 	releasesLatestURL = "/repos/SeeDAO-OpenSource/sgn-server/releases/latest"
 )
 
-func NewUpdateCmd(hoptions *mvc.HttpClientOptions) *UpdateCmd {
+func NewUpdateCmd() *UpdateCmd {
 	cmd := &cobra.Command{
 		Use:   "update",
 		Short: "update to latest version",
 		Long:  "update to latest version",
-		RunE:  func(cmd *cobra.Command, args []string) error { return update(cmd, hoptions, args) },
+		RunE:  func(cmd *cobra.Command, args []string) error { return update(cmd, args) },
 	}
 	return (*UpdateCmd)(cmd)
 }
 
-func update(cmd *cobra.Command, hoptions *mvc.HttpClientOptions, args []string) error {
+func update(cmd *cobra.Command, args []string) error {
+	hoptions := services.Get[mvc.HttpClientOptions]()
+	if hoptions == nil {
+		return errors.New("服务: httpClientOptions(http客户端配置)不能为空")
+	}
 	client := github.NewClient(mvc.NewHttpClient(hoptions))
 	currentVersion := getVersion(cmd)
 	if currentVersion == "" {

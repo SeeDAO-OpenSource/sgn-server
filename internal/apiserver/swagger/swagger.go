@@ -1,7 +1,7 @@
 package swagger
 
 import (
-	"github.com/SeeDAO-OpenSource/sgn/docs"
+	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/docs"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
