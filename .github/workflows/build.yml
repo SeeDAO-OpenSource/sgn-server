@@ -21,7 +21,7 @@ jobs:
     - name: go-swag
       uses: yegorrybchenko/go-swag-action@v0.1
       with:
-        command: init
+        command: init -d ./internal/apiserver,./internal/member,./pkg/mvc -o ./internal/apiserver/docs
 
     - name: Build
       run: go build -v ./...
