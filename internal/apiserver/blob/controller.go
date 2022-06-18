@@ -21,7 +21,7 @@ func newBlobController() BlobController {
 // @Summary Get blob data
 // @Schemes
 // @Description
-// @Tags example
+// @Tags Blob
 // @Produce octet-stream
 // @Success 200
 // @Router /api/blob/{key} [get]
