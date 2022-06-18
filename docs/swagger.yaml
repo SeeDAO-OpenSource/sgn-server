@@ -62,7 +62,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/v1/blob/{key}:
+  /api/blob/{key}:
     get:
       parameters:
       - description: key
@@ -78,7 +78,7 @@ paths:
       summary: Get blob data
       tags:
       - example
-  /api/v1/sgn:
+  /api/sgn:
     get:
       consumes:
       - application/json
@@ -100,7 +100,7 @@ paths:
       summary: 获取sgn信息列表
       tags:
       - sgn
-  /identity/v1:
+  /members:
     get:
       consumes:
       - application/json
@@ -124,7 +124,28 @@ paths:
       summary: Get all members
       tags:
       - Member
-  /identity/v1/{address}:
+    post:
+      consumes:
+      - application/json
+      description: Insert member
+      parameters:
+      - description: member
+        in: body
+        name: member
+        required: true
+        schema:
+          $ref: '#/definitions/member.Member'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mvc.DataResult'
+      summary: Insert member
+      tags:
+      - Member
+  /members/{address}:
     delete:
       consumes:
       - application/json
@@ -143,6 +164,26 @@ paths:
           schema:
             $ref: '#/definitions/mvc.DataResult'
       summary: Delete member
+      tags:
+      - Member
+    get:
+      consumes:
+      - application/json
+      description: Get member by address
+      parameters:
+      - description: address
+        in: path
+        name: address
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mvc.DataResult'
+      summary: Get member by address
       tags:
       - Member
     put:
@@ -171,50 +212,7 @@ paths:
       summary: Update member
       tags:
       - Member
-  /member/v1:
-    post:
-      consumes:
-      - application/json
-      description: Insert member
-      parameters:
-      - description: member
-        in: body
-        name: member
-        required: true
-        schema:
-          $ref: '#/definitions/member.Member'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/mvc.DataResult'
-      summary: Insert member
-      tags:
-      - Member
-  /member/v1/{address}:
-    get:
-      consumes:
-      - application/json
-      description: Get member by address
-      parameters:
-      - description: address
-        in: path
-        name: address
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/mvc.DataResult'
-      summary: Get member by address
-      tags:
-      - Member
-  /member/v1/range/{addresses}:
+  /members/range/{addresses}:
     get:
       consumes:
       - application/json

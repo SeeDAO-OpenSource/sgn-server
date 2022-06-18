@@ -2,11 +2,13 @@ package membercmd
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"strings"
 
 	"github.com/SeeDAO-OpenSource/sgn/internal/member"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/spf13/cobra"
 )
 
@@ -60,9 +62,9 @@ func importData(cmd *cobra.Command) error {
 	for i, item := range data {
 		members[i] = toMember(item)
 	}
-	service, err := member.NewMemberService()
-	if err != nil {
-		return err
+	service := services.Get[member.MemberService]()
+	if service == nil {
+		return errors.New("member service is nil")
 	}
 	if err := service.InsertManay(members); err != nil {
 		return err

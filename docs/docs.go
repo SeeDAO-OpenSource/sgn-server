@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/blob/{key}": {
+        "/api/blob/{key}": {
             "get": {
                 "produces": [
                     "application/octet-stream"
@@ -41,7 +41,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/sgn": {
+        "/api/sgn": {
             "get": {
                 "description": "按照交易时间进行降序排序",
                 "consumes": [
@@ -75,7 +75,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/identity/v1": {
+        "/members": {
             "get": {
                 "description": "Get all members",
                 "consumes": [
@@ -110,9 +110,103 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Insert member",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Insert member",
+                "parameters": [
+                    {
+                        "description": "member",
+                        "name": "member",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/member.Member"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
             }
         },
-        "/identity/v1/{address}": {
+        "/members/range/{addresses}": {
+            "get": {
+                "description": "Get members by addresses",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Get members by addresses",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "addresses",
+                        "name": "addresses",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/members/{address}": {
+            "get": {
+                "description": "Get member by address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Get member by address",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "address",
+                        "name": "address",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/mvc.DataResult"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Update member",
                 "consumes": [
@@ -164,104 +258,6 @@ const docTemplate = `{
                     "Member"
                 ],
                 "summary": "Delete member",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "address",
-                        "name": "address",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/member/v1": {
-            "post": {
-                "description": "Insert member",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Member"
-                ],
-                "summary": "Insert member",
-                "parameters": [
-                    {
-                        "description": "member",
-                        "name": "member",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/member.Member"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/member/v1/range/{addresses}": {
-            "get": {
-                "description": "Get members by addresses",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Member"
-                ],
-                "summary": "Get members by addresses",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "addresses",
-                        "name": "addresses",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mvc.DataResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/member/v1/{address}": {
-            "get": {
-                "description": "Get member by address",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Member"
-                ],
-                "summary": "Get member by address",
                 "parameters": [
                     {
                         "type": "string",

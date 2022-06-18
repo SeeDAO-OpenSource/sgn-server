@@ -1,19 +1,14 @@
 package member
 
 import (
-	"github.com/SeeDAO-OpenSource/sgn/internal/common"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/db/mongodb"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type MemberService struct {
 	repo MemberRepository
 }
 
-func NewMemberService() (*MemberService, error) {
-	mongoClient, err := mongodb.GetClient(common.MongoOptions)
-	if err != nil {
-		return nil, err
-	}
+func NewMemberService(mongoClient *mongo.Client) (*MemberService, error) {
 	repo := NewMongoMemberRepository(mongoClient)
 	srv := &MemberService{
 		repo: repo,

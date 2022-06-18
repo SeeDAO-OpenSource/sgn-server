@@ -23,7 +23,6 @@
 ## 引用的开源库
 
 - [gin](https://github.com/gin-gonic/gin)
-- [wire](https://github.com/google/wire)
 - [cobra](https://github.com/spf13/cobra)
 - [viper](https://github.com/spf13/viper)
 - [mongo-driver](https://github.com/mongodb/mongo-go-driver)

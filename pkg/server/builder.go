@@ -6,17 +6,17 @@ import (
 )
 
 type ServerBuiler struct {
-	AppBuilder *app.AppBuilder
-	initors    []ServerConfigureFunc
-	Options    *ServerOptions
+	App     *app.AppBuilder
+	initors []ServerConfigureFunc
+	Options *ServerOptions
 }
 
 func AddServer(builder *app.AppBuilder, options *ServerOptions) *ServerBuiler {
 	builder.BindOptions("Server", options)
 	return &ServerBuiler{
-		AppBuilder: builder,
-		initors:    make([]ServerConfigureFunc, 0),
-		Options:    options,
+		App:     builder,
+		initors: make([]ServerConfigureFunc, 0),
+		Options: options,
 	}
 }
 

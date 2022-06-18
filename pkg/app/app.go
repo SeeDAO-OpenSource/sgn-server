@@ -4,13 +4,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/SeeDAO-OpenSource/sgn/pkg/options"
 	"github.com/spf13/cobra"
 )
 
 type App struct {
-	rootCmd       *cobra.Command
-	optionsInitor *options.OptionsInitor
+	rootCmd *cobra.Command
 }
 
 func newApp(root *cobra.Command) App {
