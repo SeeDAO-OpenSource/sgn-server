@@ -29,13 +29,14 @@ func newSgnController() SgnController {
 // @Param page query int false "页码"
 // @Param pageSize query int false "每页数量"
 func (c *SgnController) GetOwners(ctx *gin.Context) {
-	page, pageSize := mvc.PageQuery(ctx)
+	skip := mvc.QueryInt(ctx, "skip")
+	limit := mvc.QueryInt(ctx, "limit")
 	srv := services.Get[SgnService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("sgn service is nil"))
 		return
 	}
-	data, err := srv.GetOwners("0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", page, pageSize)
+	data, err := srv.GetOwners("0x23fDA8a873e9E46Dbe51c78754dddccFbC41CFE1", int64(skip), int64(limit))
 	if err != nil {
 		mvc.Error(ctx, err)
 		return

@@ -21,8 +21,8 @@ type SgnService struct {
 	TokenRepo  SgnTokenRepo
 }
 
-func (srv *SgnService) GetOwners(address string, page int, pageSize int) ([]erc721.TokenInfo, error) {
-	return srv.TokenRepo.GetList(address, page, pageSize)
+func (srv *SgnService) GetOwners(address string, skip int64, limit int64) ([]erc721.TokenInfo, error) {
+	return srv.TokenRepo.GetList(address, skip, limit)
 }
 
 func (srv *SgnService) PullData(contract *string, skip int, tokens []string, logging bool) error {
@@ -35,6 +35,7 @@ func (srv *SgnService) PullData(contract *string, skip int, tokens []string, log
 		if i < skip {
 			continue
 		}
+
 		if tokens != nil && len(tokens) > 0 {
 			exists := false
 			for _, t := range tokens {
@@ -73,9 +74,6 @@ func (srv *SgnService) GetTokenImage(token int64, address string, process *blob.
 		return nil, err
 	}
 	uri := &tokeInfo.Metadata.Image
-	if uri == nil {
-		return nil, nil
-	}
 	if !srv.Blobstore.Exists(uri) {
 		if err := srv.SaveImage(uri, true); err != nil {
 			return nil, err

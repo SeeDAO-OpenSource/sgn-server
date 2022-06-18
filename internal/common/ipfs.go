@@ -5,14 +5,15 @@ import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/ipfs"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 )
 
 func AddIpfsClient(builder *app.AppBuilder) {
-	var ipfsOptions = &ipfs.IpfsOptions{
-		BaseURL: "https://ipfs.io/ipfs/",
-	}
-	builder.BindOptions("Ipfs", ipfsOptions)
 	builder.ConfigureServices(func() error {
+		var ipfsOptions = &ipfs.IpfsOptions{
+			BaseURL: "https://ipfs.io/ipfs/",
+		}
+		utils.ViperBind("Ipfs", ipfsOptions)
 		services.AddValue(ipfsOptions)
 		services.AddTransient(func(c *services.Container) *ipfs.IpfsClient {
 			options := services.Get[ipfs.IpfsOptions]()
