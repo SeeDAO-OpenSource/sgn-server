@@ -6,6 +6,14 @@ import (
 
 var container = newContainer()
 
+func GetContainer() *Container {
+	return container
+}
+
+func CreateContainer() *Container {
+	return newContainer()
+}
+
 func AddService(descriptor ServiceDescriptor) *Container {
 	container.Add(descriptor)
 	return container
@@ -16,17 +24,9 @@ func TryAddService(descriptor ServiceDescriptor) *Container {
 	return container
 }
 
-func GetContainer() *Container {
-	return container
-}
-
-func CreateContainer() *Container {
-	return newContainer()
-}
-
 func Add[T interface{}](scope ServiceScope, creator func(*Container) *T) {
 	AddService(ServiceDescriptor{
-		ServiceType: getType[T](),
+		ServiceType: getServiceType[T](),
 		Creator:     func(c *Container) interface{} { return creator(c) },
 		Scope:       scope,
 	})
@@ -34,7 +34,7 @@ func Add[T interface{}](scope ServiceScope, creator func(*Container) *T) {
 
 func TryAdd[T interface{}](scope ServiceScope, creator func(*Container) *T) {
 	TryAddService(ServiceDescriptor{
-		ServiceType: getType[T](),
+		ServiceType: getServiceType[T](),
 		Creator:     func(c *Container) interface{} { return creator(c) },
 		Scope:       scope,
 	})
@@ -70,22 +70,31 @@ func TryAddValue(value interface{}) {
 	})
 }
 
-func AddByType[T interface{}](serviceType reflect.Type, creator func(*Container) *T) {
+func AddByType[T interface{}](serviceType reflect.Type, scope ServiceScope, creator func(*Container) *T) {
 	AddService(ServiceDescriptor{
 		ServiceType: serviceType,
 		Creator:     func(c *Container) interface{} { return creator(c) },
+		Scope:       scope,
+	})
+}
+
+func TryAddByType[T interface{}](serviceType reflect.Type, scope ServiceScope, creator func(*Container) *T) {
+	TryAddService(ServiceDescriptor{
+		ServiceType: serviceType,
+		Creator:     func(c *Container) interface{} { return creator(c) },
+		Scope:       scope,
 	})
 }
 
 func Get[T interface{}]() *T {
-	return container.Get(getType[T]()).(*T)
+	return container.Get(getServiceType[T]()).(*T)
 }
 
 func GetByType[T interface{}](serviceType reflect.Type) *T {
 	return container.Get(serviceType).(*T)
 }
 
-func getType[T interface{}]() reflect.Type {
+func getServiceType[T interface{}]() reflect.Type {
 	return reflect.TypeOf((*T)(nil))
 }
 
