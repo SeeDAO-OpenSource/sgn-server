@@ -6,8 +6,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-func BindKey(key string, dest interface{}) {
+func ViperBind(key string, dest interface{}) {
 	ViperBindKey(viper.GetViper(), key, dest)
+	viper.UnmarshalKey(key, dest)
 }
 
 func ViperBindKey(v *viper.Viper, key string, dest interface{}) {
