@@ -11,8 +11,7 @@ type ServerBuiler struct {
 	Options *ServerOptions
 }
 
-func AddServer(builder *app.AppBuilder, options *ServerOptions) *ServerBuiler {
-	builder.BindOptions("Server", options)
+func NewServerBuilder(builder *app.AppBuilder, options *ServerOptions) *ServerBuiler {
 	return &ServerBuiler{
 		App:     builder,
 		initors: make([]ServerConfigureFunc, 0),
