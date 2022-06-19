@@ -38,7 +38,7 @@ func (c *Container) Get(serviceType reflect.Type) interface{} {
 }
 
 func (c *Container) Add(descriptor ServiceDescriptor) {
-	index := c.find(&descriptor.ServiceType)
+	index := c.findIndex(&descriptor.ServiceType)
 	if index >= 0 {
 		c.Services[index] = descriptor
 	} else {
@@ -47,7 +47,7 @@ func (c *Container) Add(descriptor ServiceDescriptor) {
 }
 
 func (c *Container) TryAdd(descriptor ServiceDescriptor) {
-	index := c.find(&descriptor.ServiceType)
+	index := c.findIndex(&descriptor.ServiceType)
 	if index < 0 {
 		c.Services = append(c.Services, descriptor)
 	}
@@ -62,7 +62,7 @@ func (c *Container) firstOrDefault(serviceType reflect.Type) *ServiceDescriptor 
 	return nil
 }
 
-func (c *Container) find(serviceType *reflect.Type) int {
+func (c *Container) findIndex(serviceType *reflect.Type) int {
 	for i, v := range c.Services {
 		if v.ServiceType == *serviceType {
 			return i
