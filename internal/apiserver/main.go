@@ -9,9 +9,16 @@ import (
 	sgn "github.com/SeeDAO-OpenSource/sgn/internal/apiserver/sgn"
 	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/swagger"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 )
 
 func AddApiServer(builder *server.ServerBuiler) {
+	builder.App.ConfigureServices(func() error {
+		utils.ViperBind("Server", builder.Options)
+		services.AddValue(builder.Options)
+		return nil
+	})
 	sgn.AddSgn(builder)
 	blob.AddBlob(builder)
 	memberapi.AddMember(builder)

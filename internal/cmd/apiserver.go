@@ -17,7 +17,7 @@ func NewApiServerCmd(builder *app.AppBuilder) *ApiServerCmd {
 		Long:  "启动SGN服务",
 	}
 	options := &server.ServerOptions{}
-	serverBuiler := server.AddServer(builder, options)
+	serverBuiler := server.NewServerBuilder(builder, options)
 	apiserver.AddApiServer(serverBuiler)
 	cmd.PersistentFlags().IntVarP(&options.Port, "port", "p", options.Port, "端口号")
 	viper.BindPFlag("apiserver.port", cmd.PersistentFlags().Lookup("port"))
