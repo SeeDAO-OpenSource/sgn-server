@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func AddSgn(builder *server.ServerBuiler) error {
+func SgnApi(builder *server.ServerBuiler) error {
 	erc721.AddErc721Services(builder.App)
 	builder.Configure(func(s *server.Server) error {
 		return initRoute(s.G)

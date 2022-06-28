@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func AddMember(builder *server.ServerBuiler) error {
+func MemberApi(builder *server.ServerBuiler) error {
 	builder.Configure(func(s *server.Server) error {
 		return initRoute(s.G)
 	})

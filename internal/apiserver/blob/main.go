@@ -6,7 +6,7 @@ import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 )
 
-func AddBlob(buider *server.ServerBuiler) error {
+func BlobStore(buider *server.ServerBuiler) error {
 	buider.Configure(initRoute)
 	buider.App.ConfigureServices(func() error {
 		services.AddTransient(func(c *services.Container) *BlobService {

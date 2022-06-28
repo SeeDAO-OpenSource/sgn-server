@@ -19,14 +19,14 @@ func AddApiServer(builder *server.ServerBuiler) {
 		services.AddValue(builder.Options)
 		return nil
 	})
-	sgn.AddSgn(builder)
-	blob.AddBlob(builder)
-	memberapi.AddMember(builder)
-	swagger.AddSwagger(builder)
-	builder.Configure(func(s *server.Server) error {
-		relaceDemoAddress(s.Options)
-		return nil
-	})
+	builder.Add(sgn.SgnApi).
+		Add(memberapi.MemberApi).
+		Add(blob.BlobStore).
+		Add(swagger.SwaggerDoc).
+		Configure(func(s *server.Server) error {
+			relaceDemoAddress(s.Options)
+			return nil
+		})
 }
 
 func relaceDemoAddress(options *server.ServerOptions) {
