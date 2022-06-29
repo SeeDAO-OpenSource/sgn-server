@@ -16,9 +16,9 @@ func NewApiServerCmd(builder *app.AppBuilder) *ApiServerCmd {
 		Short: "SGN Api Server",
 		Long:  "启动SGN服务",
 	}
-	options := &server.ServerOptions{}
-	serverBuiler := server.NewServerBuilder(builder, options)
+	serverBuiler := server.NewServerBuilder(builder)
 	apiserver.AddApiServer(serverBuiler)
+	options := serverBuiler.Options
 	cmd.PersistentFlags().IntVarP(&options.Port, "port", "p", options.Port, "端口号")
 	viper.BindPFlag("apiserver.port", cmd.PersistentFlags().Lookup("port"))
 	cmd.RunE = func(cmd *cobra.Command, args []string) error { return runAction(serverBuiler) }

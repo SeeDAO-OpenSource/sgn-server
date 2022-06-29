@@ -7,7 +7,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func AddSwagger(builder *server.ServerBuiler) error {
+func SwaggerDoc(builder *server.ServerBuiler) error {
 	docs.SwaggerInfo.BasePath = "/api"
 	builder.Configure(func(s *server.Server) error {
 		s.G.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

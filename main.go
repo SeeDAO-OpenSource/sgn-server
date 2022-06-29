@@ -18,9 +18,9 @@ func main() {
 
 func buildApp() (*app.App, error) {
 	builder := app.NewAppBuilder()
-	builder.Version(GetVersion().Version)
-	common.AddCommonServices(builder)
-	cmd.AddCommands(builder)
-	builder.Info("sgn", "提供SeeDao SGN 相关功能", "提供SeeDao SGN 相关功能")
+	builder.Version(GetVersion().Version).
+		Info("sgn", "提供SeeDao SGN 相关功能", "提供SeeDao SGN 相关功能").
+		Use(common.CommonServices).
+		Use(cmd.AppCommands)
 	return builder.Build()
 }

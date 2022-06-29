@@ -6,15 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type AppCommands struct {
-	Test      *TestCmd
-	ApiServer *ApiServerCmd
-	SgnPull   *SgnPullCmd
-	Config    *ConfigCmd
-	Update    *UpdateCmd
-}
-
-func AddCommands(ac *app.AppBuilder) {
+func AppCommands(ac *app.AppBuilder) {
 	ac.CmdBuilder.AddCommand((*cobra.Command)(NewTestCmd()))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(NewApiServerCmd(ac)))
 	ac.CmdBuilder.AddCommand((*cobra.Command)(NewSgnPullCmd(ac)))

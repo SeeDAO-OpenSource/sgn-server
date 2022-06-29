@@ -11,16 +11,21 @@ type ServerBuiler struct {
 	Options *ServerOptions
 }
 
-func NewServerBuilder(builder *app.AppBuilder, options *ServerOptions) *ServerBuiler {
+func NewServerBuilder(builder *app.AppBuilder) *ServerBuiler {
 	return &ServerBuiler{
 		App:     builder,
 		initors: make([]ServerConfigureFunc, 0),
-		Options: options,
+		Options: &ServerOptions{},
 	}
 }
 
 func (b *ServerBuiler) Configure(action ServerConfigureFunc) *ServerBuiler {
 	b.initors = append(b.initors, action)
+	return b
+}
+
+func (b *ServerBuiler) Add(action func(*ServerBuiler) error) *ServerBuiler {
+	action(b)
 	return b
 }
 

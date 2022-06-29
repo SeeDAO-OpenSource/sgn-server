@@ -25,14 +25,16 @@ func (ab *AppBuilder) Build() (*App, error) {
 	return &app, nil
 }
 
-func (ab *AppBuilder) Version(version string) {
+func (ab *AppBuilder) Version(version string) *AppBuilder {
 	ab.Context.Version = version
+	return ab
 }
 
-func (ab *AppBuilder) Info(use string, short string, description string) {
+func (ab *AppBuilder) Info(use string, short string, description string) *AppBuilder {
 	ab.Context.Name = use
 	ab.Context.Short = short
 	ab.Context.Description = description
+	return ab
 }
 
 func (a *AppBuilder) PreRun(action RunFunc) {
@@ -45,6 +47,11 @@ func (a *AppBuilder) Run(action RunFunc) {
 
 func (a *AppBuilder) PostRun(action PostRunFunc) {
 	a.Context.PostRun(action)
+}
+
+func (a *AppBuilder) Use(action func(*AppBuilder)) *AppBuilder {
+	action(a)
+	return a
 }
 
 func (a *AppBuilder) BindOptions(key string, options interface{}) {
