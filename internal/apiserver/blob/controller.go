@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,7 +33,7 @@ func (c *BlobController) Get(ctx *gin.Context) {
 		return
 	}
 	key = strings.TrimLeft(key, "/")
-	service := services.Get[BlobService]()
+	service := di.Get[BlobService]()
 	if service == nil {
 		mvc.Error(ctx, errors.New("blob service is nil"))
 		return

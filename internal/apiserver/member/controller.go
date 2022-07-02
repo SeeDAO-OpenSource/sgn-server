@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/SeeDAO-OpenSource/sgn/internal/member"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,7 +28,7 @@ func NewMemberController() MemberController {
 // @param page query string false "page"
 // @param size query string false "size"
 func (c MemberController) GetList(ctx *gin.Context) {
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
@@ -56,7 +56,7 @@ func (c MemberController) GetByAddress(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
@@ -83,7 +83,7 @@ func (c MemberController) GetByAddresses(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "addresses is empty")
 		return
 	}
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
@@ -117,7 +117,7 @@ func (c MemberController) Insert(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
@@ -151,7 +151,7 @@ func (c MemberController) Update(ctx *gin.Context) {
 		mvc.Error(ctx, err)
 		return
 	}
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
@@ -178,7 +178,7 @@ func (c MemberController) Delete(ctx *gin.Context) {
 		mvc.Fail(ctx, http.StatusBadRequest, "address is empty")
 		return
 	}
-	srv := services.Get[member.MemberService]()
+	srv := di.Get[member.MemberService]()
 	if srv == nil {
 		mvc.Error(ctx, errors.New("member service is nil"))
 		return
