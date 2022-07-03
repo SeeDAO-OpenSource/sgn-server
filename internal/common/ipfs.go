@@ -2,9 +2,9 @@ package common
 
 import (
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/ipfs"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 )
 
@@ -14,10 +14,10 @@ func AddIpfsClient(builder *app.AppBuilder) {
 			BaseURL: "https://ipfs.io/ipfs/",
 		}
 		utils.ViperBind("Ipfs", ipfsOptions)
-		services.AddValue(ipfsOptions)
-		services.AddTransient(func(c *services.Container) *ipfs.IpfsClient {
-			options := services.Get[ipfs.IpfsOptions]()
-			requestClient := services.Get[mvc.RequestClient]()
+		di.AddValue(ipfsOptions)
+		di.AddTransient(func(c *di.Container) *ipfs.IpfsClient {
+			options := di.Get[ipfs.IpfsOptions]()
+			requestClient := di.Get[mvc.RequestClient]()
 			if requestClient == nil || options == nil {
 				return nil
 			}

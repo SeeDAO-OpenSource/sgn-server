@@ -5,9 +5,9 @@ import (
 
 	"github.com/SeeDAO-OpenSource/sgn/internal/apiserver/pkg/erc721"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/blob"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/ipfs"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/server"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -19,17 +19,17 @@ func SgnApi(builder *server.ServerBuiler) error {
 		return initRoute(s.G)
 	})
 	builder.App.ConfigureServices(func() error {
-		services.AddTransient(createSgnService)
-		services.AddTransient(func(c *services.Container) *Erc721TransferLogRepo {
-			client := services.Get[mongo.Client]()
+		di.AddTransient(createSgnService)
+		di.AddTransient(func(c *di.Container) *Erc721TransferLogRepo {
+			client := di.Get[mongo.Client]()
 			if client == nil {
 				return nil
 			}
 			repo := NewMongoErc721TransferLogRepo(client)
 			return &repo
 		})
-		services.AddTransient(func(c *services.Container) *SgnTokenRepo {
-			client := services.Get[mongo.Client]()
+		di.AddTransient(func(c *di.Container) *SgnTokenRepo {
+			client := di.Get[mongo.Client]()
 			if client == nil {
 				return nil
 			}
@@ -49,7 +49,7 @@ func initRoute(g *gin.Engine) error {
 }
 
 func SubscribeTransferLogs() error {
-	sgnService := services.Get[SgnService]()
+	sgnService := di.Get[SgnService]()
 	if sgnService == nil {
 		return errors.New("sgn service is nil")
 	}
@@ -66,13 +66,13 @@ func SubscribeTransferLogs() error {
 	return nil
 }
 
-func createSgnService(c *services.Container) *SgnService {
+func createSgnService(c *di.Container) *SgnService {
 	srv := &SgnService{}
-	srv.Client = services.Get[ethclient.Client]()
-	srv.Erc = services.Get[erc721.Erc721Service]()
-	srv.IpfsClient = services.Get[ipfs.IpfsClient]()
-	srv.LogRepo = *services.Get[Erc721TransferLogRepo]()
-	srv.TokenRepo = *services.Get[SgnTokenRepo]()
-	srv.Blobstore = *services.Get[blob.BlobStore]()
+	srv.Client = di.Get[ethclient.Client]()
+	srv.Erc = di.Get[erc721.Erc721Service]()
+	srv.IpfsClient = di.Get[ipfs.IpfsClient]()
+	srv.LogRepo = *di.Get[Erc721TransferLogRepo]()
+	srv.TokenRepo = *di.Get[SgnTokenRepo]()
+	srv.Blobstore = *di.Get[blob.BlobStore]()
 	return srv
 }

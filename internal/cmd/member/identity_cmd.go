@@ -8,7 +8,7 @@ import (
 
 	"github.com/SeeDAO-OpenSource/sgn/internal/member"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/app"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/spf13/cobra"
 )
 
@@ -62,7 +62,7 @@ func importData(cmd *cobra.Command) error {
 	for i, item := range data {
 		members[i] = toMember(item)
 	}
-	service := services.Get[member.MemberService]()
+	service := di.Get[member.MemberService]()
 	if service == nil {
 		return errors.New("member service is nil")
 	}

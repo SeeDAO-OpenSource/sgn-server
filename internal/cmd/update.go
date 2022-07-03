@@ -9,8 +9,8 @@ import (
 	"path"
 	"strings"
 
+	"github.com/SeeDAO-OpenSource/sgn/pkg/di"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/mvc"
-	"github.com/SeeDAO-OpenSource/sgn/pkg/services"
 	"github.com/SeeDAO-OpenSource/sgn/pkg/utils"
 	"github.com/google/go-github/v43/github"
 	"github.com/spf13/cobra"
@@ -42,7 +42,7 @@ func NewUpdateCmd() *UpdateCmd {
 }
 
 func update(cmd *cobra.Command, args []string) error {
-	hoptions := services.Get[mvc.HttpClientOptions]()
+	hoptions := di.Get[mvc.HttpClientOptions]()
 	if hoptions == nil {
 		return errors.New("服务: httpClientOptions(http客户端配置)不能为空")
 	}

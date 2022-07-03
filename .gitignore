@@ -21,3 +21,5 @@ config.yaml
 data/
 
 internal/apiserver/docs
+
+.idea/
