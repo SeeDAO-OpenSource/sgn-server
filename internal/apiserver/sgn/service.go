@@ -25,6 +25,15 @@ func (srv *SgnService) GetOwners(address string, skip int64, limit int64) ([]erc
 	return srv.TokenRepo.GetList(address, skip, limit)
 }
 
+func (srv *SgnService) GetTransferLogs(contract string) ([]ERC721Transfer, error) {
+	data, err := srv.Erc.GetTransferLogs(&contract, 0, 5)
+	if err != nil {
+		return nil, err
+	}
+	return convertTransfer(data), nil
+
+}
+
 func (srv *SgnService) PullData(contract *string, skip int, tokens []string, logging bool) error {
 	data, err := srv.Erc.GetTransferLogs(contract, 0, 5)
 	if err != nil {
@@ -36,7 +45,7 @@ func (srv *SgnService) PullData(contract *string, skip int, tokens []string, log
 			continue
 		}
 
-		if tokens != nil && len(tokens) > 0 {
+		if len(tokens) > 0 {
 			exists := false
 			for _, t := range tokens {
 				exists = (t == v.TokenID.Int().String())
